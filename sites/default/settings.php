@@ -249,7 +249,7 @@ $databases = array (
   array (
     'default' => 
     array (
-      'database' => 'sco',
+      'database' => 'sco_test1',
       'username' => 'root',
       'password' => 'antares',
       'host' => 'localhost',

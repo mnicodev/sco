@@ -17,4 +17,9 @@ jQuery(document).ready(function () {
 			jQuery("#burger").find(".burger").removeClass("fermer");
 		}
 	})
+	
+	
+	jQuery("#toolbar").find(".home a").click(function (e) {
+		e.preventDefault();
+	})
 })

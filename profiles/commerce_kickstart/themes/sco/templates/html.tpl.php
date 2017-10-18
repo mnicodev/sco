@@ -17,6 +17,15 @@
 		 auto: true
 		});
   	
+        jQuery('.view-autour-du-club ul').bxSlider({
+            mode: 'horizontal',
+            minSlides: 1,
+            maxSlides: 4,
+            moveSlides: 1,
+            slideWidth: 218,
+            pager: false,
+            slideMargin: 1
+        })
   })
   	
   </script>

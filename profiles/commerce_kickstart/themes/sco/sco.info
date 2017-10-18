@@ -15,7 +15,11 @@ regions[header]         = 'Header'
 regions[highlighted]    = 'Highlighted'
 regions[help]           = 'Help'
 regions[sidebar_first]  = 'Left column'
+regions[sidebar_right]  = 'Right column'
+regions[content_top]        = 'Content Top'
 regions[content]        = 'Content'
+regions[mediatheque]        = 'Mediatheque'
+regions[autour_du_club]        = 'Autour du club'
 regions[page_top]       = 'Page top'
 regions[page_bottom]    = 'Page bottom'
 regions[footer_top]         = 'Footer top'
@@ -27,7 +31,6 @@ regions[footer]         = 'Footer'
 ;;;;;;;;;;;;;;;;;;;;;
 
 stylesheets[all][] = css/style.css
-stylesheets[all][] = css/carousel.css
 stylesheets[all][] = css/jquery.bxslider.min.css
 
 ;;;;;;;;;;;;;;;;;;;;;
@@ -39,7 +42,7 @@ scripts[] = 'bootstrap/dist/js/bootstrap.min.js'
 scripts[] = 'bootstrap/js/affix.js'
 scripts[] = 'bootstrap/js/alert.js'
 scripts[] = 'bootstrap/js/button.js'
-scripts[] = 'bootstrap/js/carousel.js'
+;; scripts[] = 'bootstrap/js/carousel.js'
 scripts[] = 'bootstrap/js/collapse.js'
 scripts[] = 'bootstrap/js/dropdown.js'
 scripts[] = 'bootstrap/js/modal.js'

@@ -28,7 +28,6 @@ function sco_breadcrumb($variables) {
  * Override or insert variables into the page template.
  */
 function sco_preprocess_page(&$vars) {
-	
 	$view=views_get_view("slider_home");
   	$view->execute();
 	$objects = $view->result;

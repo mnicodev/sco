@@ -1,11 +1,5 @@
-.toolbar {
-	
-	#header_top {
-		top: 52px;
-	}
-	#left_column {
-		top: $height_menu_top_with_toolbar;
-	}
+#container {
+	position: relative;
 }
 
 .bx-wrapper {
@@ -28,6 +22,7 @@
 #left_column {
 	.nav > li{
 		border-bottom: 1px solid $color_border_menu; 
+		height: 50px;
 	
 		&:hover {
 			background-color: #000;
@@ -97,4 +92,10 @@ ul.event-slider.pager-processed {
 			cursor: pointer;
 		}
 	}
+}
+
+
+#main_column, #content_top {
+    overflow: hidden;
+
 }

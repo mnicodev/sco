@@ -63,7 +63,6 @@
  * @see template_preprocess_page()
  * @see template_process()
  */
-
 ?>
 
 
@@ -74,8 +73,7 @@
 		</div>
 	</section>
 	
-	<section id="header" class="">
-	</section>
+	
 	
 	<section id="content" class="">
 		<aside id="left_column" class="">
@@ -90,21 +88,39 @@
 			<img src="/misc/logo_sco.png" class="logo" />
 			<div class="burger"></div>
 		</div>
+		<?php if($is_front) : ?>
+			<div id="block-system-main-menu">
+			<?php
+				$main_menu_tree = menu_tree(variable_get('menu_main_links_source', 'main-menu')); 
+				print drupal_render($main_menu_tree);
+			?>
+			</div>
+		<?php endif;?>
 		<?php print render($page["sidebar_first"]);?>
 		</aside>
-		<div id="main" class="content ">
+		<div id="main_column" class="content ">
 			<?php if($slider && $is_front):?>
 			<ul class="slider-home">
 				<?php foreach($slider as $item): ?>
 				<?php $img=$item['img']; ?>
 				<li style="background-image: url(<?php echo $img;?>);background-position: top center;">
-					
+					<!--<img src="<?php echo $img;?>" />	-->
 					<div class="bloc_info"><?php echo $item["titre"]; ?></div>
 				</li>
 				<?php endforeach; ?>
 			</ul>
-			<?php endif; ?> 
-			<?php print render($page["content"]);?>
+			<?php endif; ?>
+			<div class="container">
+				<div class="content <?php if($is_front) echo '' ?>">
+				<?php if($page["content_top"]): ?>
+					<div id="content_top" class=""><?php print render($page["content_top"]); ?></div>
+				<?php endif; ?> 
+					<?php print render($page["header"]);?>
+					<?php print render($page["content"]);?>
+				</div>
+			</div>
+
+			
 		</div>
 	</section>
 
