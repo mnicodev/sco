@@ -1,0 +1,28 @@
+<?php
+
+function sco_twitter_block_info() {
+	$blocks[0]= array(
+		'info'=>t("sco Tweets"),
+	);
+	return $blocks;
+}
+
+function sco_twitter_theme() {
+	return array(
+		"sco_twitter_block"=>array(),
+	);
+}
+
+function sco_twitter_block_view() {
+	$block["subject"]=t("Les derniers filter");
+	$block["content"]=theme("sco_twitter_block");
+	return $block;
+}
+
+function theme_sco_twitter_block() {
+	global $base_url;
+	$url_twitter=check_plain(theme_get_setting('url_twitter','venture_theme'));
+	$str=file_get_contents($base_url."/sites/all/modules/sco_twitter/get_tweets.php");
+	$content["#markup"]="<div class='derniers_tweets'><div class='cell'><div class='titre_derniers_tweets'>".t("Derniers tweets")."</div></div><div class='cell'><div class='tweets'>".$str."</div></div></div>";
+	//return render($content);
+}

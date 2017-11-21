@@ -1,0 +1,31 @@
+name = SCO home
+description = Sco home theme website
+package = Core
+core = 7.x
+base theme = bootstrap
+
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Regions
+;;;;;;;;;;;;;;;;;;;;;
+
+regions[header]         = 'Header'
+regions[content_top]        = 'Content top'
+regions[content]        = 'Content'
+regions[footer]         = 'Footer'
+
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Stylesheets
+;;;;;;;;;;;;;;;;;;;;;
+
+stylesheets[all][] = css/style.css
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Scripts
+;;;;;;;;;;;;;;;;;;;;;
+scripts[] = 'bootstrap/dist/js/bootstrap.min.js'
+scripts[] = 'js/scripts.js'
+
+; Disable the CDN provider so compiled source files can be used.
+settings[bootstrap_cdn] = ''

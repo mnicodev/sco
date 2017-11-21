@@ -1,0 +1,48 @@
+<?php
+
+function sco_tags_select_block_info() {
+	$blocks[0]= array(
+		'info'=>t("Angers SCO tags sélection"),
+	);
+	return $blocks;
+}
+
+function sco_tags_select_theme() {
+	return array(
+		"sco_tags_select_block"=>array(),
+	);
+}
+
+function sco_tags_select_view($delta='') {
+	$block = array();
+	$block["subject"]=t("Tags sélection");
+	$block["content"]=theme("sco_tags_select_block");
+   /*switch ($delta) {
+   	case "tags-select-id":
+			$block["subject"]=t("Tags selection");
+			$block["content"]=custom_contents(); //theme("scotheme",$variables);
+			break;
+	}*/
+	return $block;
+}
+
+
+
+
+function theme_sco_tags_select_block() {
+	global $base_url;
+	//$url_twitter=check_plain(theme_get_setting('url_twitter','venture_theme'));
+	//$str=file_get_contents($base_url."/sites/all/modules/aloha_academy_twitter/get_tweets.php");
+	$content["#markup"]="<div id='selection'>CECI EST UN TEST</div>";
+	return render($content);
+}
+
+
+/*function sco_bloc_theme() {
+	return array(
+		'specialtheme' => array(
+			'file' => "block.tpl.php",
+			"path"=>drupal_get_path('module','sco_bloc')."/templates"
+		)
+	);
+}*/

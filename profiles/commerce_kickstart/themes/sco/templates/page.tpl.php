@@ -63,6 +63,7 @@
  * @see template_preprocess_page()
  * @see template_process()
  */
+global $language;
 ?>
 
 
@@ -88,37 +89,85 @@
 			<img src="/misc/logo_sco.png" class="logo" />
 			<div class="burger"></div>
 		</div>
-		<?php if($is_front) : ?>
-			<div id="block-system-main-menu">
+		<?php //if($is_front) : ?>
+			<div id="block-menu-menu-menu-institutionnel">
 			<?php
-				$main_menu_tree = menu_tree(variable_get('menu_main_links_source', 'main-menu')); 
-				print drupal_render($main_menu_tree);
+				$main_menu_tree = menu_tree( 'menu-menu-institutionnel'); //menu_tree_all_data('menu-menu-institutionnel');   //menu_tree( 'menu-menu-institutionnel');//print_r( $main_menu_tree);
+			//	print drupal_render($main_menu_tree);
+				include "main-menu.tpl.php";
+
 			?>
 			</div>
-		<?php endif;?>
+		<?php //endif;?>
 		<?php print render($page["sidebar_first"]);?>
 		</aside>
 		<div id="main_column" class="content ">
-			<?php if($slider && $is_front):?>
-			<ul class="slider-home">
-				<?php foreach($slider as $item): ?>
-				<?php $img=$item['img']; ?>
-				<li style="background-image: url(<?php echo $img;?>);background-position: top center;">
-					<!--<img src="<?php echo $img;?>" />	-->
-					<div class="bloc_info"><?php echo $item["titre"]; ?></div>
-				</li>
-				<?php endforeach; ?>
-			</ul>
-			<?php endif; ?>
+			<?php include("slider.tpl.php"); ?>
 			<div class="container">
+
 				<div class="content <?php if($is_front) echo '' ?>">
-				<?php if($page["content_top"]): ?>
-					<div id="content_top" class=""><?php print render($page["content_top"]); ?></div>
-				<?php endif; ?> 
+					<?php if($page["content_top"]): ?>
+						<div id="content_top" class=""><?php print render($page["content_top"]); ?></div>
+					<?php endif; ?> 
 					<?php print render($page["header"]);?>
-					<?php print render($page["content"]);?>
+					<h1><?php print $title; ?></h1>
+					<?php if(isset($fond_ecran["desc"])): ?>
+					<p><?php print $fond_ecran["desc"]; ?></p>
+					<?php endif; ?> 
+					
+					<?php $content=str_replace("#SHARE",t('Share to'),render($page["content"]));?>
+					<?php $content=str_replace("show more",t('show more'),$content);?>
+					<?php if($page["content_map"]): ?>
+						<div id="content_map" class=""><?php print render($page["content_map"]); ?></div>
+					<?php endif; ?> 
+					<?php print $content; ?>
+				<?php if(isset($node)): ?>
+				<div class='retour'>
+				<?php if($node->type=="actualite"): ?>
+					<a href="/<?php print $language->language; ?>/actualites-infos"><?php print t("return to article"); ?></a>
+				<?php endif;?>
+				<?php if($node->type=="article"): ?>
+					<a href="/<?php print $language->language; ?>/fondation"><?php print t("return to fondation"); ?></a>
+				<?php endif;?>
+				<?php if($node->type=="joueur"): ?>
+					<a href="/<?php print $language->language; ?>/equipe-pro/effectif"><?php print t("return to list of player"); ?></a>
+				<?php endif;?>
+				</div>
+				<?php 
+				if($node->type=="joueur"){
+					print $actu_joueur;
+				}
+				?>
+				<?php endif;?>
 				</div>
 			</div>
+			<?php if($page["content_bottom"]): ?>
+				<div id="content_bottom" class=""><?php print render($page["content_bottom"]); ?></div>
+			<?php endif; ?> 
+            <?php if($liste_partenaires): ?>
+            <div id="liste_partenaires">
+            <ul class="liste_partenaires">
+            <?php foreach($liste_partenaires as $id=>$partenaires):?>
+            <li class="partenaires <?php print str_replace(" ","-",$id); ?>">
+                <h4><?php print $id; ?></h4>
+                <ul >
+                <?php foreach($partenaires as $id=>$partenaire): ?>
+                <li><img src="<?php print $partenaire['img']; ?>" title="" alt="" /></li>
+                <?php endforeach; ?>
+                </ul>
+            </li>
+            <?php endforeach;?>
+            </ul>
+            </div>
+            <?php endif; ?>
+
+            <?php if($page["footer_top"]): ?>
+                <div id="footer_top"><?php print render($page["footer"]); ?></div>
+            <?php endif; ?>
+
+            <?php if($page["footer"]): ?>
+                <footer><?php print render($page["footer"]); ?></footer>
+            <?php endif; ?>
 
 			
 		</div>

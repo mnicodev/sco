@@ -63,7 +63,6 @@
  * @see template_preprocess_page()
  * @see template_process()
  */
-
 ?>
 
 
@@ -92,27 +91,15 @@
 		<?php if($is_front) : ?>
 			<div id="block-system-main-menu">
 			<?php
-				$main_menu_tree = menu_tree(variable_get('menu_main_links_source', 'main-menu')); 
-				print drupal_render($main_menu_tree);
+			/*	$main_menu_tree = menu_tree(variable_get('menu_main_links_source', 'main-menu')); 
+print drupal_render($main_menu_tree);*/
 			?>
 			</div>
 		<?php endif;?>
 		<?php print render($page["sidebar_first"]);?>
 		</aside>
 		<div id="main_column" class="content ">
-            <?php if($slider && $is_front):?>
-           <div id="slider_home">
-			<ul class="slider-home">
-				<?php foreach($slider as $item): ?>
-				<?php $img=$item['img']; ?>
-				<li style="background-image: url(<?php echo $img;?>);background-position: top center;">
-					<!--<img src="<?php echo $img;?>" />	-->
-					<div class="bloc_info"><?php echo $item["titre"]; ?></div>
-				</li>
-				<?php endforeach; ?>
-            </ul>
-           </div>
-			<?php endif; ?>
+			<?php include("slider.tpl.php"); ?>
 			<div class="container"> <!-- container -->
 				<div class="content <?php if($is_front) echo '' ?>">
 				<?php if($page["content_top"]): ?>
@@ -125,6 +112,9 @@
                 </aside>
 
 			</div> <!-- fin container -->
+			<?php if($page["content_bottom"]): ?>
+				<div id="content_bottom" class=""><?php print render($page["content_bottom"]); ?></div>
+			<?php endif; ?> 
             <?php if($page["mediatheque"]): ?>
                 <div id="mediatheque">
                     <?php print render($page["mediatheque"]); ?>
@@ -134,6 +124,33 @@
                 <div id="autour_du_club">
                     <?php print render($page["autour_du_club"]); ?>
                 </div>
+			<?php endif; ?>
+
+			<div class="seo">
+
+				<h1><?php print theme_get_setting("h1","sco"); ?></h1>
+				<h2><?php print theme_get_setting("h2","sco"); ?></h2>
+			</div>
+
+            <?php if($liste_partenaires): ?>
+            <div id="liste_partenaires">
+            <ul class="liste_partenaires">
+            <?php foreach($liste_partenaires as $id=>$partenaires):?>
+            <li class="partenaires <?php print str_replace(" ","-",$id); ?>">
+                <h4><?php print $id; ?></h4>
+                <ul >
+                <?php foreach($partenaires as $id=>$partenaire): ?>
+                <li><img src="<?php print $partenaire['img']; ?>" title="" alt="" /></li>
+                <?php endforeach; ?>
+                </ul>
+            </li>
+            <?php endforeach;?>
+            </ul>
+            </div>
+            <?php endif; ?>
+
+            <?php if($page["footer_top"]): ?>
+                <div id="footer_top"><?php print render($page["footer"]); ?></div>
             <?php endif; ?>
 
             <?php if($page["footer"]): ?>

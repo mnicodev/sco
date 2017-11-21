@@ -23,9 +23,13 @@
  *
  * @ingroup views_templates
  */
+global $language;
 ?>
 <?php foreach ($fields as $id => $field): ?>
 <?php 
+if($id=="nid") {
+	$url=drupal_get_path_alias("node/".strip_tags($field->content));
+}
 if($id=="created") {
     $tmp=explode("|",strip_tags($field->content));
     if($tmp[0]==date("d")) {
@@ -33,23 +37,30 @@ if($id=="created") {
         $datetime_now=new DateTime(date("Y-m-d H:i"));
         $interval=$datetime_post->diff($datetime_now);
         $duration=$interval->format("%Hh%I");
-        $content="Il y a ".$duration." - ";
+        $content["date"]=$field->wrapper_prefix."Il y a ".$duration." - ".$field->wrapper_suffix;
     }else {
         $datetime_post=new DateTime($tmp[2]."-".$tmp[1]."-".$tmp[0]);
         $datetime_now=new DateTime(date("Y-m-d"));
         $interval=$datetime_post->diff($datetime_now);
         $duration=$interval->format("%a");
-        if((int)$duration>1) $content="Il y a ".$duration." jours - ";else $content="Il y a ".$duration." jour - ";
+        if((int)$duration>1) $content["date"]=$field->wrapper_prefix."Il y a ".$duration." jours - ".$field->wrapper_suffix;else $content=$field->wrapper_prefix."Il y a ".$duration." jour - ".$field->wrapper_suffix;
 
     }
-} else $content=$field->content;
+} else if($id!="nid") $content["body"]=strip_tags($field->content);
 ?>
   <?php if (!empty($field->separator)): ?>
     <?php print $field->separator; ?>
   <?php endif; ?>
 
-  <?php print $field->wrapper_prefix; ?>
-    <?php print $field->label_html; ?>
-    <?php print $content; ?>
-  <?php print $field->wrapper_suffix; ?>
+  <?php //print $field->wrapper_prefix; ?>
+    <?php //print $field->label_html; ?>
+    <?php //print $content; ?>
+  <?php //print $field->wrapper_suffix; ?>
 <?php endforeach; ?>
+<div class="item">
+<a href="/<?php print $language->language; ?>/<?php print $url; ?>">
+<?php print $content["date"]; ?>
+<?php print $content["body"]; ?>
+</a>
+
+</div>

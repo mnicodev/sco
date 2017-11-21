@@ -1,0 +1,13 @@
+name = Node Field Sheet
+description = Allows to use sheetnode for node fields.
+package = Node Field
+core = 7.x
+dependencies[] = node_field
+dependencies[] = sheetnode
+
+; Information added by Drupal.org packaging script on 2017-03-20
+version = "7.x-2.46"
+core = "7.x"
+project = "node_field"
+datestamp = "1489980787"
+

@@ -1,3 +1,7 @@
+
+body, h1, h2, h3, h4, p,.h3 {
+	font-family: 'Ubuntu', sans-serif!important;
+}
 #container {
 	position: relative;
 }
@@ -22,7 +26,7 @@
 #left_column {
 	.nav > li{
 		border-bottom: 1px solid $color_border_menu; 
-		height: 50px;
+		height: auto;
 	
 		&:hover {
 			background-color: #000;
@@ -30,7 +34,10 @@
 		
 		a {
 			color: #fff;
+			padding: 10px;
 		}
+
+		
 		
 	}
 }
@@ -73,7 +80,7 @@ ul.event-slider.pager-processed {
 		margin: auto;
 		left: 0;
 		right: 0;
-		z-index: 9000;
+		z-index: 400;
 		top: 5px;
 	}
 	
@@ -95,7 +102,89 @@ ul.event-slider.pager-processed {
 }
 
 
-#main_column, #content_top {
+#content_top {
     overflow: hidden;
+
+}
+
+
+.lecture {
+	background: url(../img/lecture.jpg) no-repeat;
+	width: 34px;
+	height: 34px;
+}
+
+#left_column {
+	.force-du-sco {
+		@media (min-width: 200px) {display: none;}
+		@media (min-width: 768px) {display: block;}
+		padding-top: 30px;
+		text-align: center;
+		>p {
+			color: #fff;
+			text-transform: uppercase;
+		}
+		.suivez-nous {
+			color: $color_doree;
+			text-transform: uppercase;
+		}
+		.network {
+			width: 80px;
+			padding-top: 10px;
+			margin: auto;
+
+			.item {
+				width: 25px;
+				height: 22px;
+				float :left;
+
+				a {
+					text-indent: -9999px;
+					width: 25px;
+					height: 22px;
+					display: inline-block;
+				}
+				&.facebook {
+					background: url(../img/facebook.png) no-repeat;
+				background-position: center center;
+				}
+				&.twitter {
+					background: url(../img/twitter.png) no-repeat;
+				background-position: center center;
+				}
+				&.instagram {
+					background: url(../img/instagram.png) no-repeat;
+				background-position: center center;
+				}
+			}
+		}
+	}
+}
+
+body.not-logged-in {
+	#messages {
+		.error {
+			display: none;
+		}
+	}
+}
+
+.custom-select {
+
+    display: inline-block;
+    max-width: 100%;
+    height: calc(2.25rem + 2px);
+    padding: .375rem 1.75rem .375rem .75rem;
+    line-height: 1.25;
+    color: #464a4c;
+    vertical-align: middle;
+    background: #fff url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23333' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E") no-repeat right .75rem center;
+        background-size: auto auto;
+    -webkit-background-size: 8px 10px;
+    background-size: 8px 10px;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: .25rem;
+    -moz-appearance: none;
+    -webkit-appearance: none;
 
 }

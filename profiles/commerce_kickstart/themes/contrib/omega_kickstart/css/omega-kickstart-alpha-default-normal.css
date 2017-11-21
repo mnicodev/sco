@@ -228,6 +228,11 @@ div.messages.commerce-add-to-cart-confirmation .message-inner .view-confirm-mess
 
 /* Cloud zoom */
 .node-product-type .cloud-zoom-container .cloud-zoom-gallery-thumbs .cloud-zoom-gallery {
-  margin: 5px 0; }
+  margin:5px 10px 0 0; }
 .node-product-type .field-name-field-product form.commerce-add-to-cart label {
-  float: left; }
+  float: left;
+  font-weight: 300;
+  font-size: 0.9em;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 2.1em; }

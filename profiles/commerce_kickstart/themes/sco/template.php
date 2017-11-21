@@ -13,32 +13,113 @@ function sco_html_head_alter(&$head_elements) {
  * Insert themed breadcrumb page navigation at top of the node content.
  */
 function sco_breadcrumb($variables) {
-  $breadcrumb = $variables['breadcrumb'];
-  if (!empty($breadcrumb)) {
+    global $language;
+	$id=arg(1);
+	$node=node_load($id);
+	$tmp = $variables['breadcrumb'];
+//	print_r($tmp);
+	if(strip_tags($tmp[1])=="Médiathèque") {
+		$tmp[1]=str_replace("Médiathèque","Vidéos",$tmp[1]);
+	}
+    if (!empty($tmp)) {
+		$term=current(taxonomy_get_term_by_name(arg(2)));
+		if($term->vocabulary_machine_name=="tags_album") {
+
+		}
+        /*if(is_object($node) && $node->type=="actualite") {
+            $breadcrumb[]="<a href='/".$language->language."/actualites'>".t('news')."</a>";
+            $exclue="actualite";
+	}*/
+		if($id=="fonds-ecran" && arg(2)) {
+			$tmp[1]="<a href='/".$language->language."/".arg(0)."/".arg(1)."'>".(is_array($tmp[1])?$tmp[1]["data"]:$tmp[1])."</a>";
+			$tmp[2]=arg(2);
+		}
+		if(arg(0)=="actualites-infos" && arg(1)) {
+			$tmp[0]="<a href='/".$language->language."/".arg(0)."'>".$tmp[0]."</a>";
+			$tmp[1]=arg(1);
+
+		}
+		$breadcrumb[]=$tmp[0];
+        for($i=1;$i<count($tmp);$i++) {
+            if(!is_array($tmp[$i]) && $tmp[$i]!=$exclue) $breadcrumb[]=$tmp[$i];
+//            else $breadcrumb[]=$tmp[$i]["data"];
+        }
     // Use CSS to hide titile .element-invisible.
-    $output = '<h2 class="element-invisible">' . t('You are here') . '</h2>';
+    //$output = '<h3 >' . t('You are here') . '</h3>';
     // comment below line to hide current page to breadcrumb
-	$breadcrumb[] = drupal_get_title();
-    $output .= '<nav class="breadcrumb">' . implode(' » ', $breadcrumb) . '</nav>';
+//	$breadcrumb[] = drupal_get_title();
+		$output .= '<nav class="breadcrumb">'.t('You are here').' : <a href="/'.$language->language.'">'.t("home").'</a> / '  . implode(' / ', $breadcrumb) . '</nav>';
     return $output;
   }
 }
 
+function sco_preprocess_html(&$vars) {
+
+}
 /**
  * Override or insert variables into the page template.
  */
 function sco_preprocess_page(&$vars) {
-	$view=views_get_view("slider_home");
-  	$view->execute();
-	$objects = $view->result;
-	$vars["slider"]=array();
-	foreach($objects as $slider) {
-		$item=$slider->_field_data["nid"]["entity"];
-		
-		$vars["slider"][]=array("img"=>file_create_url($item->field_image["und"][0]["uri"]),"titre"=>$item->title_field["und"][0]["value"]);
-		
+
+	global $language;
+	$term=current(taxonomy_get_term_by_name(arg(2)));
+	$vars["fond_ecran"]=array();
+	if(is_object($term)) {
+		$vars["fond_ecran"]=array("titre"=>$term->name,"desc"=>$term->description);
+		$vars["title"]=$term->name;
 	}
+    $type=arg(0);
+    $nid=arg(1);
+    if($type=="node" && isset($nid)) $vars["node"]=node_load($nid);
+	$main_menu_tree = menu_tree(variable_get('menu_main_links_source', 'main-menu')); 
+    $vars["autour_du_club"]=array();
+    foreach($main_menu_tree as $item) {
+        if(isset($item["#original_link"]["localized_options"]["item_attributes"]["class"]) && $item["#original_link"]["localized_options"]["item_attributes"]["class"])
+            $vars["autour_du_club"][]=array(
+                "title"=>$item["#title"],
+                "class"=>$item["#original_link"]["localized_options"]["item_attributes"]["class"],
+                "url"=>$item["#href"]
+            );
+	}
+	if($vars["node"]->type=="accueil" ||$vars["is_front"] ||isset($vars["node"]->field_tags_diapo["und"][0]["tid"])) {
+		$view=views_get_view("slider_home");
+	  	$view->execute();
+		$objects = $view->result;
+		$vars["slider"]=array();
+		foreach($objects as $slider) {
+			$item=$slider->_field_data["nid"]["entity"];
+			$url="#";
+			if(isset($item->field_article_lie["und"][0]["target_id"])) 
+				$url=drupal_get_path_alias("node/".$item->field_article_lie["und"][0]["target_id"]);
+			else if(isset($item->field_link["und"][0]["url"])) $url=$item->field_link["und"][0]["url"];
+			$vars["slider"][]=array(
+				"img"=>file_create_url((isset($item->field_image[$language->language])?$item->field_image[$language->language][0]["uri"]:(isset($item->field_image["fr"])?$item->field_image["fr"][0]["uri"]:$item->field_image["und"][0]["uri"]))),
+				"titre"=>$item->title,
+				"url"=>$url
+			);
+		}
+	}
+
+	if($vars["node"]->type=="joueur") {
+		$view=views_get_view("bloc_actualites");
+		$view->set_display("block_2");
+		$view->execute();
+		$vars["actu_joueur"]=str_replace("#JOUEUR",$vars["node"]->title,$view->render());
+
+	}
+
 	
+//echo count($vars["slider"]);
+
+    $voc=taxonomy_vocabulary_machine_name_load("partenaires");
+    $vars["liste_partenaires"]=array();
+    foreach(taxonomy_get_tree($voc->vid) as $term) {
+        $tmp=taxonomy_term_load($term->tid);
+        $vars["liste_partenaires"][trim($tmp->field_type["und"][0]["value"])][]=array(
+            "img"=>file_create_url($tmp->field_image["und"][0]["uri"]),
+            "url"=>$tmp->field_link["und"][0]["url"]
+        );
+    }
   if (isset($vars['main_menu'])) {
     $vars['main_menu'] = theme('links__system_main_menu', array(
       'links' => $vars['main_menu'],
@@ -71,6 +152,24 @@ function sco_preprocess_page(&$vars) {
   else {
     $vars['secondary_menu'] = FALSE;
   }
+
+
+  if(isset($vars["node"])) {
+	  $suggests = &$vars['theme_hook_suggestions'];
+
+    	$args = arg();
+    	unset($args[0]);
+
+    // Set type.
+	    $type = "page__type_{$vars['node']->type}";
+
+    // Bring it all together.
+	    $suggests = array_merge(
+    		$suggests,
+		    array($type),
+		    theme_get_suggestions($args, $type)
+    	);
+  }
 }
 
 /**
@@ -78,7 +177,6 @@ function sco_preprocess_page(&$vars) {
  */
 function sco_menu_local_tasks(&$variables) {
   $output = '';
-
   if (!empty($variables['primary'])) {
     $variables['primary']['#prefix'] = '<h2 class="element-invisible">' . t('Primary tabs') . '</h2>';
     $variables['primary']['#prefix'] .= '<ul class="tabs primary clearfix">';
@@ -103,3 +201,24 @@ function sco_preprocess_node(&$variables) {
     $variables['classes_array'][] = 'node-full';
   }
 }
+
+function sco_preprocess_taxonomy_term(&$variables) {
+    $tid=$variables["tid"];
+    $name=$variables["name"];
+	$childrens=taxonomy_get_children($tid);//echo count($childrens);
+    if(count($childrens) || strtolower($name)=="club") {
+        $childrens=taxonomy_get_children($tid);
+        $variables["menu_bloc"]=array();
+        if(isset($variables["content"]["description"])) $variables["menu_bloc"]["content"]=$variables["content"]["description"]["#markup"];
+        foreach($childrens as $children){ 
+            $variables["menu_bloc"]["child"][]=array(
+                "title"=>$children->name,
+                "url"=>(isset($children->field_link["und"])?$children->field_link["und"][0]["url"]:""),
+                "img"=>file_create_url($children->field_image["und"][0]["uri"])
+            );
+        }
+
+    }
+}
+
+

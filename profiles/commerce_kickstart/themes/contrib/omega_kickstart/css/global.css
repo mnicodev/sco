@@ -1,5 +1,6 @@
 @import url(//fonts.googleapis.com/css?family=Open+Sans:400,700,300,600,800);
 @import url(//fonts.googleapis.com/css?family=Gentium+Basic:400,700);
+@import url(//fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,500,500i,700,700i);
 /* This file will hold styles for the mobile version of your website (mobile first). */
 /* This also can include ANY global CSS that applies site-wide. Unless overwritten by a more specific style rule, CSS declarations in global.css will apply site-wide. */
 /* Override Omega */
@@ -121,8 +122,8 @@ html {
   overflow-x: hidden; }
 
 body {
-  font-family: "Open Sans", sans-serif;
-  font-size: 14px;
+  font-family: "Ubuntu", sans-serif;
+  font-size: 16px;
   font-weight: 400;
   margin: 0;
   overflow-x: hidden;
@@ -132,8 +133,8 @@ body {
   margin: 0 10px; }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Open Sans", sans-serif;
-  font-weight: 700;
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 500;
   letter-spacing: 0; }
 
 a:link, a:visited {
@@ -144,11 +145,15 @@ a:hover {
   color: #000000; }
 
 h1#page-title {
-  font-size: 28px;
-  font-weight: 600;
-  margin-left: 10px;
-  /* LTR */
-  text-transform: uppercase; }
+  font-size: 2.5em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 300;
+  margin: 1em 0;
+  background: url(../images/h2-line.jpg) no-repeat left bottom;
+  padding-bottom: 10px; }
+
+
 
 .node-page {
   margin: 0 10px; }
@@ -168,8 +173,7 @@ input[type="text"],
 input[type="time"],
 input[type="url"],
 input[type="week"] {
-  background: #fbfafa;
-  border: 1px solid #e0e0e0;
+  border: transparent;
   color: #4c4c4c;
   margin: 1px;
   max-width: 100%;
@@ -219,6 +223,7 @@ select {
 *******************************************/
 #region-user-first {
   float: left;
+  margin: 0;
   /* LTR */ }
 
 /* User menu */
@@ -241,20 +246,24 @@ select {
       list-style: none;
       margin: 0;
       padding: 0;
+      border: 0;
       padding-bottom: 3px;
       position: relative;
-      right: 50%; }
+      right: 50%;
+      line-height: 1.9em; }
       .block-menu-user-menu .content ul.menu li a {
-        display: block;
-        color: white;
-        font-family: "Open Sans", sans-serif;
-        font-weight: 400;
-        -moz-border-radius: 4px;
-        -webkit-border-radius: 4px;
-        -khtml-border-radius: 4px;
-        border-radius: 4px;
-        padding: 5px 6px;
-        text-decoration: none; }
+      display: block;
+      color: white;
+      font-family: "Ubuntu", sans-serif;
+      text-transform: uppercase;
+      font-weight: 500;
+      font-size: 0.97em;
+      -moz-border-radius: 4px;
+      -webkit-border-radius: 4px;
+      -khtml-border-radius: 4px;
+      border-radius: 4px;
+      padding: 5px 6px;
+      text-decoration: none; }
         .block-menu-user-menu .content ul.menu li a.active {
           text-decoration: underline; }
         .block-menu-user-menu .content ul.menu li a.active:hover, .block-menu-user-menu .content ul.menu li a:hover {
@@ -271,7 +280,7 @@ select {
   height: 100%;
   margin: 0; }
   #region-user-second .region-user-second-inner {
-    height: 100%; }
+    height: 100%; display: block; }
 
 /**
 * Cart block
@@ -369,10 +378,10 @@ select {
 * 2.2. Zone branding
 **********************************************/
 .zone-branding .region-branding {
-  margin: 50px 0 15px 0; }
+  margin: 30px 0 15px 0; }
   .zone-branding .region-branding .logo-img {
     float: none;
-    margin: 10px 0;
+    margin: 0;
     text-align: center; }
 
 /**
@@ -511,7 +520,7 @@ select {
         .navigation .primary-menu ul li a,
         .navigation .second-menu ul li a {
           display: block;
-          font-family: "Open Sans", sans-serif;
+          font-family: "Ubuntu", sans-serif;
           font-weight: 600;
           padding: 12px 16px;
           text-decoration: none; }
@@ -969,7 +978,7 @@ select {
 **********************************************/
 .zone-footer-wrapper {
   padding-top: 32px;
-  padding-bottom: 36px; }
+  padding-bottom: 28px; }
 
 /**
 * Menu footer navigation
@@ -1289,11 +1298,11 @@ body.activebar-container .zone-footer2-wrapper {
     /* LTR */
     min-height: 380px;
     height: auto;
-    margin: 0;
-    padding-right: 5px;
-    /* LTR */
-    padding-bottom: 30px;
-    width: 230px; }
+    margin: 0 30px 0 0;
+    border: 1px solid transparent; }
+  .page-products .view-display-products li.views-row:hover{
+    border:1px solid #000;
+  }
     .page-products .view-display-products li.views-row.last {
       padding-right: 0;
       /* LTR */ }
@@ -1307,27 +1316,32 @@ body.activebar-container .zone-footer2-wrapper {
     /* LTR */ }
   .page-products .view-display-products li .commerce-product-field {
     margin-bottom: 5px; }
-  .page-products .view-display-products li header {
-    background: transparent url("../images/bg_product_attributes_top.png") center top no-repeat; }
+  .page-products .view-display-products li header {}
     .page-products .view-display-products li header h2 {
       clear: both;
       font-size: 14px;
-      height: 35px;
+      height: 42px;
       line-height: 16px;
-      margin: 0 4px;
+      margin: 0;
       padding-top: 20px; }
+
     .page-products .view-display-products li header a {
-      color: #000;
-      font-size: 14px;
-      text-decoration: none; }
+      color: #211e1e;
+      font-size: 16px;
+      text-decoration: none;
+      font-family: 'Ubuntu', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1.2em; }
   .page-products .view-display-products li .content .commerce-product-field {
     font-size: 14px;
     text-decoration: none; }
   .page-products .view-display-products li .content .field-name-commerce-price {
-    color: #858787;
-    font-family: "Open Sans", sans-serif;
-    font-size: 14px;
-    font-weight: 400; }
+    color: #b39c73;
+    font-size: 1.5em;
+    letter-spacing: 0.09em;
+    font-weight: 300;
+  }
     .page-products .view-display-products li .content .field-name-commerce-price .price_prefix p {
       display: inline; }
   .page-products .view-display-products li .field-name-field-color .vocabulary-color,
@@ -1360,7 +1374,7 @@ body.activebar-container .zone-footer2-wrapper {
   height: 0;
   visibility: hidden; }
 .block-search-api-sorts .block-inner {
-  float: right;
+  float: left;
   /* LTR */
   clear: right;
   /* LTR */ }
@@ -1368,9 +1382,11 @@ body.activebar-container .zone-footer2-wrapper {
     display: inline;
     float: left;
     /* LTR */
-    font-size: 13px;
+    font-size: 16px;
     line-height: 32px;
     margin-right: 5px;
+    color: #211e1e;
+    letter-spacing: 0.08em;
     /* LTR */
     text-transform: uppercase; }
 .block-search-api-sorts .content {
@@ -1379,7 +1395,7 @@ body.activebar-container .zone-footer2-wrapper {
   .block-search-api-sorts .content ul.search-api-sorts {
     margin: 0; }
     .block-search-api-sorts .content ul.search-api-sorts li {
-      color: white;
+      color: #211e1e;
       display: inline;
       float: left;
       /* LTR */
@@ -1390,16 +1406,16 @@ body.activebar-container .zone-footer2-wrapper {
       text-decoration: none; }
       .block-search-api-sorts .content ul.search-api-sorts li span,
       .block-search-api-sorts .content ul.search-api-sorts li a {
-        background-color: #8e8e8e;
         -moz-border-radius: 8px;
         -webkit-border-radius: 8px;
         -khtml-border-radius: 8px;
-        border-radius: 8px;
         display: block;
-        padding: 5px 12px; }
+        padding: 5px 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-weight: 500; }
       .block-search-api-sorts .content ul.search-api-sorts li a {
-        background-color: #cecece;
-        color: white;
+        background-color: transparent;
         text-decoration: none; }
       .block-search-api-sorts .content ul.search-api-sorts li span a {
         background: none;
@@ -1413,7 +1429,7 @@ body.activebar-container .zone-footer2-wrapper {
         height: 13px;
         width: 13px; }
       .block-search-api-sorts .content ul.search-api-sorts li .search-api-sort-active {
-        color: white;
+        color: #211e1e;
         position: relative;
         padding-right: 25px;
         /* LTR */
@@ -1604,11 +1620,9 @@ div.messages.commerce-add-to-cart-confirmation {
   .node-product-type .field-name-body .read-less a {
     background-image: url("../images/btn_read_less.png"); }
 .node-product-type .field-type-commerce-product-reference {
-  background: url("../images/bg_product_attributes_bottom.png") center bottom no-repeat;
   margin-bottom: 15px;
   padding-bottom: 50px; }
   .node-product-type .field-type-commerce-product-reference form.commerce-add-to-cart {
-    background: url("../images/bg_product_attributes_top.png") center top no-repeat;
     padding-top: 40px; }
     .node-product-type .field-type-commerce-product-reference form.commerce-add-to-cart .attribute-widgets .form-item {
       position: relative;
@@ -1646,9 +1660,7 @@ div.messages.commerce-add-to-cart-confirmation {
     .node-product-type .field-type-commerce-product-reference form.commerce-add-to-cart label {
       float: left;
       /* LTR */
-      font-family: "Open Sans", sans-serif;
       font-weight: 600;
-      margin-right: 5px;
       /* LTR */
       white-space: nowrap;
       width: 45%; }
@@ -1656,29 +1668,30 @@ div.messages.commerce-add-to-cart-confirmation {
         content: " :"; }
     .node-product-type .field-type-commerce-product-reference form.commerce-add-to-cart .form-item {
       margin: 0;
-      padding-bottom: 1em; }
+      padding: 1.2em 0;
+      border-top: 1px solid #c2c2c2;
+      border-bottom: 1px solid #c2c2c2; }
     .node-product-type .field-type-commerce-product-reference form.commerce-add-to-cart .form-submit {
-      background-color: #2698F2;
-      background-image: url("../images/bg_add_to_cart.png");
-      background-position: 90% 50%;
-      /* LTR */
+      background-color: #b39c73;
+      background-image: url(../images/shop-produit.png);
+      font-size: 0.9em;
       background-repeat: no-repeat;
+      width: 100%;
+      text-transform: uppercase;
       border: 0;
-      -moz-border-radius: 8px;
-      -webkit-border-radius: 8px;
-      -khtml-border-radius: 8px;
-      border-radius: 8px;
-      color: #ffffff;
-      font-family: "Open Sans", sans-serif;
-      font-size: 17px;
-      font-weight: 400;
+      border-radius: 0;
+      display: block;
+      font-weight: 600;
       margin-top: 40px;
-      margin-left: 5px;
-      /* LTR */
-      padding: 5px 50px 5px 10px;
-      /* LTR */ }
-      .node-product-type .field-type-commerce-product-reference form.commerce-add-to-cart .form-submit:hover {
-        cursor: pointer; }
+      padding: 20px 0 20px 0;
+      font-family: 'Ubuntu', sans-serif;
+      transition: all 1s; }
+
+    .node-product-type .field-type-commerce-product-reference form.commerce-add-to-cart .form-submit:hover {
+        cursor: pointer;
+        transition: all 1.5s;
+        background-color: #d5b57d;
+      }
 
 .service-links {
   float: right;
@@ -1802,7 +1815,7 @@ ol.inline.commerce-checkout-progress {
   .page-user-orders .view-commerce-line-item-table table td,
   .view-commerce-backoffice-user-orders table td {
     background-color: transparent;
-    border-bottom: 1px solid #CCC;
+    border: 1px solid #000000;
     margin: 0;
     padding: 25px 10px; }
   #views-form-commerce-cart-form-default table .views-field-edit-delete,

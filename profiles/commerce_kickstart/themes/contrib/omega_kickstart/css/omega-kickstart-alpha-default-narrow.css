@@ -70,10 +70,11 @@ div.messages.commerce-add-to-cart-confirmation .message-inner .view-confirm-mess
     /* LTR */ }
 
 .node-product-type .cloud-zoom-container #wrap {
-  float: right !important;
+  float:left !important;
   /* LTR */ }
 .node-product-type .cloud-zoom-container .cloud-zoom-gallery-thumbs {
-  clear: none;
-  float: none !important; }
+  clear: both;
+  float: none !important;
+  padding-top:0.5em; }
   .node-product-type .cloud-zoom-container .cloud-zoom-gallery-thumbs .cloud-zoom-gallery {
     margin: 5px; }

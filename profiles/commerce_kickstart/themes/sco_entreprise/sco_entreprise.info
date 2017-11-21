@@ -1,0 +1,42 @@
+name = SCO Entreprise
+description = Sco entreprise theme website
+package = Core
+core = 7.x
+base theme = bootstrap
+
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Regions
+;;;;;;;;;;;;;;;;;;;;;
+
+
+regions[header_top]         = 'Header Top'
+regions[header]         = 'Header'
+regions[header_bottom]         = 'Header Bottom'
+regions[header]         = 'Header'
+regions[content_top]        = 'Content Top'
+regions[content]        = 'Content'
+regions[content_bottom]        = 'Content Bottom'
+regions[footer_top]         = 'Footer top'
+regions[footer]         = 'Footer'
+regions[footer_bottom]         = 'Footer bottom'
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Stylesheets
+;;;;;;;;;;;;;;;;;;;;;
+
+stylesheets[all][] = css/style.css
+stylesheets[all][] = css/jquery.bxslider.min.css
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Scripts
+;;;;;;;;;;;;;;;;;;;;;
+scripts[] = 'js/jquery.bxslider.min.js'
+;; scripts[] = 'bootstrap/assets/javascripts/holder.js'
+scripts[] = 'bootstrap/dist/js/bootstrap.min.js'
+
+;; scripts[] = 'bootstrap/js/transition.js'
+scripts[] = 'js/scripts.js'
+
+; Disable the CDN provider so compiled source files can be used.
+settings[bootstrap_cdn] = ''

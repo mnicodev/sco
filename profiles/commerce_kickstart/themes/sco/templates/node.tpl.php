@@ -73,6 +73,7 @@
  * @see template_preprocess_node()
  * @see template_process()
  */
+global $language;
 ?>
 <?php if (!$page): ?>
   <article id="node-<?php print $node->nid; ?>" class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
@@ -100,13 +101,28 @@
       hide($content['comments']);
       hide($content['links']);
       hide($content['field_tags']);
+	  if($node->type=="actualite") {
+		  //print_r($content['field_tags']);
+          print "<div class='date-tags'>";
+		  print "<div class='date'>".date("d/m/Y",$node->created)."</div>";
+		  print "<div class='field-name-field-tags'><label>".t('category')."</label>";
+		  foreach($content["field_tags"]["#object"]->field_tags["und"] as $term) {
+			  print "<div class='field-item'>";
+			  $url=($language->language."/actualites-infos/".urlencode($term["taxonomy_term"]->name));
+			  print "<a href='/".$url."'>".$term["taxonomy_term"]->name."</a>";
+			  print "</div>";
+		  }
+		  print "</div>";
+          //print render($content['field_tags']); 
+          print "</div>";
+      }
+      $content=str_replace("show more photos",t('show more photos'),$content);
       print render($content);
     ?>
   </div>
 
   <?php if (!empty($content['field_tags']) || !empty($content['links'])): ?>
     <footer>
-      <?php print render($content['field_tags']); ?>
       <?php print render($content['links']); ?>
     </footer>
   <?php endif; ?>

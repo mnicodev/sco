@@ -1,0 +1,100 @@
+<?php
+
+function sco_init() {
+	global $user, $_COOKIE;
+	/* PATCH ANGERS-SCO */
+	/* Redirection prehom en fonction d'un cookie */
+	if(!$_COOKIE["sco"] && $user->uid==0) {
+		setCookie("sco",1);
+		header("location: /fr/accueil",time()+60*60*24);
+	}
+
+}
+
+function sco_views_query_alter(&$view,&$query) {
+	global $_GET,$language;
+	if($view->name=="autour_du_club") {
+//	print_r($language->language);
+		$view->query->where[1]["conditions"][]=array(
+			"field"=>"taxonomy_term_data.language",
+			"value" =>$language->language,
+			"operator"=>"="
+		);
+
+		//$term_path=drupal_get_normal_path(current_path());//echo $term_path;
+//		$term=taxonomy_get_term_by_name(arg(2));
+		/*print_r($term);		print_r($view->query->where);*/
+	}
+	if($view->name=="galerie_photos") {
+		$node=node_load(arg(1));
+		//print_r($node);
+		$tid=$node->field_tags_video["und"][0]["tid"];
+//		print_r($node->field_tags_video["und"][0]["taxonomy_term"]);
+		if($tid) {
+			$view->query->where[1]["conditions"][2]["value"]=$tid;
+		}
+
+		//print_r($view);
+		
+		
+	}
+	
+	if($view->name=="slider_home") {
+		$id=arg(1);
+		if($id) {
+			$node=node_load(arg(1));
+			$tid=$node->field_tags_diapo["und"][0]["tid"];
+			if($tid) $view->query->where[1]["conditions"][2]["value"]=$tid;
+		}
+		//print_r($view);
+	}
+	if($view->name=="actualites") {
+		$arg=arg(1);
+		if($arg) {
+			$term=current(taxonomy_get_term_by_name($arg));
+			$view->query->where[1]["conditions"][2]=array(
+				"field"=>"field_data_field_tags.field_tags_tid",
+				"value"=>$term->tid,
+				"operator"=>"="
+			);
+			//print_r($view->query);
+		}
+
+	}
+	if($view->name=="bloc_actualites") {
+		$arg=arg(1);
+		if($arg) {
+			$node=node_load($arg);
+			if(isset($node->field_tags["und"][0]["tid"])) {
+				$term=$node->field_tags["und"][0]["tid"];
+				$view->query->where[1]["conditions"][2]=array(
+				"field"=>"field_data_field_tags.field_tags_tid",
+				"value"=>$term,
+				"operator"=>"="
+				);
+			}
+			//print_r($view->query);
+		}
+
+	}
+
+}
+
+
+function sco_form_alter(&$form, &$form_state, $form_id) {
+	
+	
+	
+	
+}
+
+function sco_form_submit(&$form, &$form_state) {
+	//print_r($form);exit;
+}
+
+
+function sco_node_insert($node) {
+	if($node->type=="actualite") {
+	//	print_r($node);exit;
+	}
+}
