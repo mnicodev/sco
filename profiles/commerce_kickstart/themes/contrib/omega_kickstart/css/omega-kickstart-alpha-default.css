@@ -12,9 +12,7 @@
 **********************************************/
 .zone-user-wrapper {
   position: fixed;
-  z-index: 200;
-  background: #fff;
-  height: 48px; }
+  z-index: 200; }
 
 /*******************************************
 * 2.1.2. Region user second
@@ -64,7 +62,6 @@
   display: block !important;
   margin: 26px 0;
   padding-bottom: 0;
-  text-align: center;
   /* Main menu */
   /* Secondary menu */ }
   .navigation h2 {
@@ -84,26 +81,18 @@
       width: auto; }
       .navigation .primary-menu ul li a,
       .navigation .second-menu ul li a {
-          color: #211e1e;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-          font-size: 0.9em;
-          font-family: 'Ubuntu', sans-serif;
-          font-weight: 500;
-          display: inline;
-          border-left-width: 0;
-          border-right-width: 0;
-          padding: 1.3em 1.5em;
-          background: #fff; }
+        display: inline;
+        border-left-width: 0;
+        border-right-width: 0; }
         .navigation .primary-menu ul li a.active, .navigation .primary-menu ul li a:hover,
         .navigation .second-menu ul li a.active,
         .navigation .second-menu ul li a:hover {
           border-left-width: 0;
-          border-right-width: 0;
-          background: #f0f0f0;
-          color:#211e1e; }
+          border-right-width: 0; }
       .navigation .primary-menu ul li.first a,
       .navigation .second-menu ul li.first a {
+        border-left: 1px solid #cccccc;
+        /* LTR */ }
       .navigation .primary-menu ul li.last a,
       .navigation .second-menu ul li.last a {
         border-right: 1px solid #cccccc;
@@ -113,7 +102,12 @@
         margin-left: -2px;
         /* LTR */ }
   .navigation .primary-menu {
-        margin: 0 auto;}
+    float: left;
+    /* LTR */
+    margin-right: 12px;
+    /* LTR */
+    margin-left: 0;
+    /* LTR */ }
   .navigation .second-menu {
     clear: inherit;
     float: right;

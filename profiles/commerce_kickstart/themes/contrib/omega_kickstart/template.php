@@ -54,37 +54,6 @@ function omega_kickstart_preprocess_field(&$variables) {
 }
 
 /**
- * Override page
- */
-function omega_kickstart_preprocess_page(&$vars) {
-	
-	 $voc=taxonomy_vocabulary_machine_name_load("partenaires");
-    $vars["liste_partenaires"]=array();
-    foreach(taxonomy_get_tree($voc->vid) as $term) {
-        $tmp=taxonomy_term_load($term->tid);
-        $vars["liste_partenaires"][trim($tmp->field_type["und"][0]["value"])][]=array(
-            "img"=>file_create_url($tmp->field_image["und"][0]["uri"]),
-            "url"=>(isset($tmp->field_link["und"][0]["url"])?$tmp->field_link["und"][0]["url"]:"#")
-        );
-    }
-	if($vars["is_front"] ||isset($vars["node"]->field_tags_diapo["und"][0]["tid"]) && isset($user) && $user->uid) {
-		$view=views_get_view("slider_home");
-	  	$view->execute();
-		$objects = $view->result;
-		$vars["slider"]=array();
-		foreach($objects as $slider) {
-			$item=$slider->_field_data["nid"]["entity"];
-			$vars["slider"][]=array(
-				"img"=>file_create_url((isset($item->field_image[$language->language])?$item->field_image[$language->language][0]["uri"]:$item->field_image["und"][0]["uri"])),
-				"titre"=>$item->title,
-				"url"=>(isset($item->field_link["und"][0]["url"])?$item->field_link["und"][0]["url"]:""),
-				"bloc"=>$item->field_bloc_info["und"][0]["value"],
-			);
-		}
-	}
-}
-
-/**
  * Override the submitted variable.
  */
 function omega_kickstart_preprocess_node(&$variables) {

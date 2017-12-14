@@ -53,14 +53,6 @@ css[global.css][name] = 'Your custom global styles'
 css[global.css][description] = 'This file holds all the globally active custom CSS of your theme.'
 css[global.css][options][weight] = '10'
 
-css[styles.css][name] = 'SCO commerce styles'
-css[styles.css][description] = 'This file holds all the globally active custom CSS of your theme.'
-css[styles.css][options][weight] = '11'
-
-css[responsive.css][name] = 'SCO commerce responsive styles'
-css[responsive.css][description] = 'This file holds all the globally active custom CSS of your theme.'
-css[responsive.css][options][weight] = '11'
-
 settings[alpha_grid] = 'alpha_default'
 settings[alpha_primary_alpha_default] = 'normal'
 settings[alpha_responsive] = '1'

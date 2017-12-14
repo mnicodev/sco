@@ -1,0 +1,515 @@
+$width_site: 100%;
+$width_sidebar_left: 190px;
+$width_sidebar_right: 312px;
+$width_content: 1090px;
+$width_bloc_view: 910px;
+$height_menu_top: 40px;
+$height_menu_top_with_toolbar: 92px;
+$height_img_autour_club: 281px;
+
+$top_bloc_info_slider: 150px;
+
+$color_sidebar_left: #211e1e;
+$color_page: #000;
+$color_header_nav: #fff;
+$color_border_menu: #474344;
+$color_menu_header: #B39C73;
+$color_border_partenaires: #777;
+$color_fond_left_column: #211e1e;
+
+$color_doree: #B69979;
+$color_fond_actu: #E2E2E2;
+$color_noir_sco: #211e1e; 
+
+$bottom_titre_une: 80px;
+$bottom_body_une: 5px;
+
+@mixin prochain_match($width) {
+    width: $width;
+	background: #000 url(../img/vs.png) no-repeat center center;
+    overflow: hidden;
+	height: auto;
+    min-height: 250px;
+
+    .titre, .field-name-title-field {
+        color: #fff;
+        text-transform: uppercase;
+        text-align: center;
+        font-size: 22px;
+        padding: 10px;
+    }
+
+    #sco-angers, #invite {
+        float:left;
+        text-align: center;
+        width: 50%;
+
+        .field-type-image {
+            height: 100px;
+            img {
+                text-align: center;
+                margin: auto;
+            }
+        }
+
+        .field-type-text {
+            color: #fff;
+            text-transform: uppercase;
+        }
+    }
+
+    .field-name-field-date {
+        clear: both;
+        color: #ccc;
+        text-align: center;
+        padding: 22px;
+    }
+
+
+}
+
+
+@mixin slider_home($height) {
+	left: 0;
+	width: 100%;
+	height: $height;
+	position: relative;
+	background-repeat: no-repeat;
+	background-size: cover;
+    max-height: $height;
+    overflow:hidden;
+}
+
+@mixin flex($dir) {
+    display: flex;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    flex-direction: $dir;
+    -webkit-flex-direction: $dir;
+    -ms-flex-direction: $dir;
+}
+
+@mixin flex_length($l) {
+    flex: $l;
+    -webkit-flex: $l;
+    -ms-flex: $l;
+}
+
+@mixin flex_wrap($w) {
+	flex-wrap: $w;
+	-webkit-flex-wrap: $w;
+	-ms-flex-wrap: $w;
+}
+
+@mixin bloc_actualite($w,$p,$f,$r) {
+    	overflow: hidden;
+    	width: 100%;
+        padding-left: $p;
+		padding-right: 20px;
+	    background: $color_fond_actu;
+
+		.h3 {
+			float: left;
+			font-size: 36px;
+			text-transform: uppercase;
+			background: url(../img/fond_h3.png) no-repeat left bottom;
+			padding-bottom: 10px;
+		}
+		.view-content {
+			overflow: hidden;
+		}
+		.view-header {
+			overflow: hidden;
+			text-align: right;
+			position: relative;
+			width: 95%;
+		 	p {
+				position: absolute;
+	            display: block;
+				bottom: 0;
+				right: 0;
+			}
+		}
+		.views-row {
+			float: $f;
+			width: $w;
+			margin-right: $r;
+			cursor: pointer;
+	
+			&.views-row-first {
+				/*padding-right: 20px;*/
+			}
+	
+	
+	
+		}
+	    .view-footer {
+	        display: none;
+	    }
+
+}
+
+
+@mixin right_column($width,$dir) {
+    width: $width;
+    background: #fff;
+    padding-bottom: 20px;
+	#block-views-fil-d-info-block {
+		width: 100%;
+		height: auto;
+		overflow: visible;
+    }
+    .region {
+        @include flex($dir);
+
+		.winamax {
+			background: $color_fond_actu;
+			padding-top: 5px;
+
+			p {
+				margin-bottom: 5px;
+			}
+		}
+        & > .block {
+            text-align: center;
+            /*margin-left: 5px; margin-right: 5px;*/
+        }
+        background: #fff;
+        .view-fil-d-info {
+            padding-left: 10px;
+            padding-right: 10px;
+            .view-header {
+                text-transform: uppercase;
+                font-size: 26px;
+                text-align: center;
+                border-bottom: 1px solid $color_doree;
+            }
+
+            .views-row {
+                border-bottom: 1px solid $color_doree;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                text-align: left;
+                padding-left: 10px;
+				width: 100%;
+
+				&:hover {
+					color: $color_doree;
+
+					a,div {
+						color: $color_doree;
+					}
+				}
+
+
+				a {
+					color: #444;
+				}
+            }
+
+            .views-row-even {
+                background: $color_fond_actu; 
+            }
+            .views-row-odd {
+                background: #fff; 
+            }
+
+            .views-field-created {
+                color: #000;
+                font-weight: bold;
+                display: inline-block;
+            }
+        }
+    }
+}
+
+
+@mixin bloc_mediatheque($dir,$p,$w) {
+	background: url(../img/fond_media.jpg) no-repeat center center;
+    background-size: cover;
+    overflow: hidden;
+    padding: $p;
+    min-height: 600px;
+    padding-top: 30px;
+
+    .h3 {
+        color: #fff;
+        margin-bottom: 20px;
+    }
+
+    .region {
+        @include flex($dir);
+        max-width: 100%;
+
+        .block {
+            width: $w;
+        }
+        .views-field-title {
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+        .derniere-video {
+            color: #fff;
+			clear: both;
+			padding-top: 20px;
+
+            iframe {
+                width: 100%;
+            }
+            a {
+                color: #fff;
+                font-weight: bold;
+            }
+        }
+        
+        .liste-dernieres-videos {
+            color: #fff;
+            margin-left: 35px;
+            margin-right: 30px;
+			margin-top: 40px;
+
+			.view-header {
+				text-align: right;
+				padding-bottom: 30px;
+			}
+
+            a {
+                color: #fff;
+                font-weight: bold;
+            }
+
+            .field-name-field-video, .views-field-field-video {
+                float: left;
+                margin-right: 10px;
+
+				.survol {
+					
+				}
+            }
+
+            .views-row {
+                padding-top: 20px;
+                padding-bottom: 20px;
+                border-top: 1px solid #B69979;
+
+            }
+            .views-row-last {
+                border-bottom: 1px solid #B69979;
+            }
+			.views-row-first {
+				display: none;
+			}
+        }
+    }
+
+}
+
+@mixin autour_du_club() {
+    padding-left: 80px;
+    padding-right: 80px;
+    padding-top: 20px;
+    min-height: 460px;
+    position: relative;
+    background: $color_fond_actu;
+    padding-bottom: 20px;
+
+    h3 {
+        max-width: 875px;
+        margin-bottom: 30px;
+    }
+
+    .view-autour-du-club {
+        //position: absolute;
+        //left:0;
+        //right: 0;
+        margin: auto;
+        max-width: 100%;
+		width: 100%;
+
+        .bx-prev {
+            background: url(../img/prev.png) no-repeat;
+            width: 41px;
+            height: 41px;
+            left: 0;
+        }
+        .bx-next {
+            background: url(../img/next.png) no-repeat;
+            width: 41px;
+            height: 41px;
+            right: 0;
+        }
+
+		ul {
+			width: 100%;
+		}
+
+        li {
+			color: #fff;
+            text-transform: uppercase;
+            font-size: 20px;
+            line-height: $height_img_autour_club;
+            .views-field-name {
+                position: absolute;
+                left: 0;
+                right: 0;
+                margin: auto;
+                text-align: center;
+
+                a {
+                    color: #fff;
+                    text-transform: uppercase;
+                    font-size: 20px;
+                    line-height: $height_img_autour_club;
+                }
+            }
+        }
+    }
+    
+}
+
+@mixin footer_nav() {
+    width: auto;
+    background: #000;
+	margin: auto;
+	display: inline-block;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    li {
+        float: left;
+        background: #000;
+        &:hover {
+            background: #000;
+        }
+
+        a {
+            color: #fff;
+            padding-top:0;
+            padding-bottom: 0;
+        }
+        a:hover {
+            background: #000;
+        }
+
+        &.first {
+            border-right: 1px solid #fff;
+		}
+		&.leaf {
+			@media (min-width: 200px) {
+				border-right: none;
+			}
+			@media (min-width: 768px) {
+				border-right: 1px solid #fff;
+			}
+        }
+        &.last {
+            border-right: none;
+        }
+    }
+}
+
+
+@mixin bloc_partenaires($dir) {
+	background: #000;
+
+    ul.liste_partenaires {
+
+        border-bottom: 1px solid $color_border_partenaires;
+        height: 100px;
+        margin-left: 0;
+        padding-left: 0;
+        @include flex($dir);
+
+        h4 {
+            margin-bottom: 0;
+            color: #fff;
+            font-weight: normal;
+            text-transform: uppercase;
+            font-size: 12px;
+			text-align: left;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        .partenaire-2 {
+            border-top: none;
+            border-bottom: none;
+            border-left: 1px solid $color_border_partenaires;
+            border-right: 1px solid $color_border_partenaires;
+            @include flex_length(3);
+
+
+            ul, h4 {
+                max-width: 700px;
+                margin: auto;
+            }
+            h4 {
+                margin-top: 10px;
+                padding-left: 10px;
+            }
+        }
+        .partenaire-1, .partenaire-3 {
+			@include flex_length(1);
+            ul {
+                width: 200px;
+                margin: auto;
+            }
+            h4 {
+                width: 200px;
+                margin: auto;
+                margin-top: 10px;
+                padding-left: 10px;
+            }
+
+        }
+        .partenaires {
+            height: 100px;
+
+            ul {
+                height: 80px;
+                padding-left: 0;
+                @include flex(row);
+				@include flex_wrap(nowrap);
+                li {
+                    @include flex_length(1);
+                    text-align: center;
+                    line-height: 80px;
+                }
+            }
+        }
+        .partenaire-3 {
+            h4 {
+                padding-left: 0;
+            }
+            ul li {
+                text-align: left;
+            }
+        }
+    } 
+}
+
+@mixin fond_marron($w) {
+			background-color: $color_doree;
+			border-radius: 0;
+			width: $w;
+			border: none;
+			color: #000;
+			height: 40px;
+			line-height: 40px;
+			padding: 0;
+			text-transform: uppercase;
+			font-weight: bold;
+}
+
+@mixin pager_standard($w) {
+	margin: 10px 0px;
+	li {
+		a {
+			@include fond_marron($w);
+			margin-top: 20px;
+		}
+	}
+}
+
+

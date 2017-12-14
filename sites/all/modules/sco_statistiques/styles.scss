@@ -1,0 +1,163 @@
+@import "define.scss";
+
+#form_saison {
+	margin-top: 40px;
+	margin-bottom: 40px;
+}
+
+ .resultats {
+	margin: 0;
+	padding: 0;
+	margin-top: 20px;
+	li {
+		 list-style: none;
+		 padding: 10px;
+		 margin: 0;
+		 overflow: hidden;
+	}
+	 .mois {
+		 background: $color_doree;
+		 text-transform: uppercase;
+	 }
+
+	 .item {
+		 cursor: pointer;
+		 &:hover {
+			 .equipe1, .equipe2 {
+				 color: $color_doree;
+			 }
+		 }
+		 div {
+			 float: left;
+			 width: 16.66%;
+
+			 img {
+				 width: 20px;
+			 }
+
+		 }
+		 .journee {
+		 }
+
+		 .date {
+		 }
+
+		 .equipe1 {
+			 font-weight: bold;
+			 text-align: right;
+			 text-transform: uppercase;
+		 }
+
+		 .score {
+			 text-align: center;
+
+		 }
+		 .perdu {
+			 color: red;
+		 }
+		 .gagne {
+			 color: green;
+		 }
+		 .null {
+			 color: #000;
+		 }
+		 .equipe2 {
+			 font-weight: bold;
+			 text-transform: uppercase;
+			 text-align: left;
+		 }
+
+	 }
+
+	 .match {
+		 @include flex(row);
+		 cursor: default;
+		 div {
+			 flex: 1;
+		 }
+		 .team1 {
+			 text-align: right;
+		 }
+
+		 .ligue1 {
+			 background: url(img/logo_l1_40.png) no-repeat;
+			 width: 20px;
+			 height: 20px;
+			 background-size: contain;
+		 }
+			
+	 }
+
+ }
+
+
+ .saison {
+	 text-transform: uppercase;
+	 color: #444;
+	 margin-top: 30px;
+
+ }
+
+
+ .fiche {
+	p.titre {
+		 background: $color_doree;
+		 padding: 5px;
+		 font-weight: bold;
+		 text-transform: uppercase;
+		 font-size: 16px;
+	}
+	 ul.bloc {
+		 overflow: hidden;
+		 padding: 0;
+		 margin-top: 20px;
+		 margin-bottom: 20px;
+		 li {
+			 float: left;
+			 list-style: none;
+			 padding: 0;
+			width: 20%;
+			 &.team1 {
+				 text-align: right;
+			 }
+			 &.team2 {
+				 text-align: left;
+			 }
+			 .temps {
+				 color: $color_doree;
+			 }
+		 }
+	 }
+	 .teams {
+		 li {
+			 font-size: 30px;
+
+			text-align: center;
+
+			&.score {
+				color: $color_doree;
+			}
+		 }
+	 }
+
+	 .goals {
+		 li {
+
+		 }
+	 }
+
+	 .carton-rouge {
+		 display: inline-block;
+		width: 10px;
+		height: 15px;
+		background: rgba(255,0,0,1);
+		margin-right: 5px;
+	 }
+	 .carton-jaune {
+		 display: inline-block;
+		width: 10px;
+		height: 15px;
+		background: rgba(255,254,0,1);
+		margin-right: 5px;
+	 }
+ }

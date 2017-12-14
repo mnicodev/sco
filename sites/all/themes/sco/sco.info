@@ -1,0 +1,61 @@
+name = SCO
+description = Sco theme website
+package = Core
+core = 7.x
+base theme = bootstrap
+
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Regions
+;;;;;;;;;;;;;;;;;;;;;
+
+regions[navigation]     = 'Navigation'
+regions[header_top]         = 'Header Top'
+regions[header]         = 'Header'
+regions[highlighted]    = 'Highlighted'
+regions[help]           = 'Help'
+regions[sidebar_first]  = 'Left column'
+regions[sidebar_right]  = 'Right column'
+regions[content_top]        = 'Content Top'
+regions[content_map]        = 'Content Map'
+regions[content]        = 'Content'
+regions[content_bottom]        = 'Content Bottom'
+regions[reseaux_sociaux]        = 'Reseaux Sociaux'
+regions[mediatheque]        = 'Mediatheque'
+regions[autour_du_club]        = 'Autour du club'
+regions[page_top]       = 'Page top'
+regions[page_bottom]    = 'Page bottom'
+regions[footer_top]         = 'Footer top'
+regions[footer]         = 'Footer'
+
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Stylesheets
+;;;;;;;;;;;;;;;;;;;;;
+
+stylesheets[all][] = css/style.css
+stylesheets[all][] = css/jquery.bxslider.min.css
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Scripts
+;;;;;;;;;;;;;;;;;;;;;
+scripts[] = 'js/jquery.bxslider.min.js'
+scripts[] = 'js/jquery.tinycarousel.js'
+;; scripts[] = 'bootstrap/assets/javascripts/holder.js'
+scripts[] = 'bootstrap/dist/js/bootstrap.min.js'
+;; scripts[] = 'bootstrap/js/affix.js'
+;; scripts[] = 'bootstrap/js/alert.js'
+;; scripts[] = 'bootstrap/js/button.js'
+;; scripts[] = 'bootstrap/js/carousel.js'
+;; scripts[] = 'bootstrap/js/collapse.js'
+;; scripts[] = 'bootstrap/js/dropdown.js'
+;; scripts[] = 'bootstrap/js/modal.js'
+;; scripts[] = 'bootstrap/js/tooltip.js'
+;; scripts[] = 'bootstrap/js/popover.js'
+;; scripts[] = 'bootstrap/js/scrollspy.js'
+;; scripts[] = 'bootstrap/js/tab.js'
+;; scripts[] = 'bootstrap/js/transition.js'
+scripts[] = 'js/scripts.js'
+
+; Disable the CDN provider so compiled source files can be used.
+settings[bootstrap_cdn] = ''

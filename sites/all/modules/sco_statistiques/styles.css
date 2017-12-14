@@ -1,0 +1,105 @@
+#form_saison {
+  margin-top: 40px;
+  margin-bottom: 40px; }
+
+.resultats {
+  margin: 0;
+  padding: 0;
+  margin-top: 20px; }
+  .resultats li {
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+    overflow: hidden; }
+  .resultats .mois {
+    background: #B69979;
+    text-transform: uppercase; }
+  .resultats .item {
+    cursor: pointer; }
+    .resultats .item:hover .equipe1, .resultats .item:hover .equipe2 {
+      color: #B69979; }
+    .resultats .item div {
+      float: left;
+      width: 16.66%; }
+      .resultats .item div img {
+        width: 20px; }
+    .resultats .item .equipe1 {
+      font-weight: bold;
+      text-align: right;
+      text-transform: uppercase; }
+    .resultats .item .score {
+      text-align: center; }
+    .resultats .item .perdu {
+      color: red; }
+    .resultats .item .gagne {
+      color: green; }
+    .resultats .item .null {
+      color: #000; }
+    .resultats .item .equipe2 {
+      font-weight: bold;
+      text-transform: uppercase;
+      text-align: left; }
+  .resultats .match {
+    display: flex;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    cursor: default; }
+    .resultats .match div {
+      flex: 1; }
+    .resultats .match .team1 {
+      text-align: right; }
+    .resultats .match .ligue1 {
+      background: url(img/logo_l1_40.png) no-repeat;
+      width: 20px;
+      height: 20px;
+      background-size: contain; }
+
+.saison {
+  text-transform: uppercase;
+  color: #444;
+  margin-top: 30px; }
+
+.fiche p.titre {
+  background: #B69979;
+  padding: 5px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 16px; }
+.fiche ul.bloc {
+  overflow: hidden;
+  padding: 0;
+  margin-top: 20px;
+  margin-bottom: 20px; }
+  .fiche ul.bloc li {
+    float: left;
+    list-style: none;
+    padding: 0;
+    width: 20%; }
+    .fiche ul.bloc li.team1 {
+      text-align: right; }
+    .fiche ul.bloc li.team2 {
+      text-align: left; }
+    .fiche ul.bloc li .temps {
+      color: #B69979; }
+.fiche .teams li {
+  font-size: 30px;
+  text-align: center; }
+  .fiche .teams li.score {
+    color: #B69979; }
+.fiche .carton-rouge {
+  display: inline-block;
+  width: 10px;
+  height: 15px;
+  background: red;
+  margin-right: 5px; }
+.fiche .carton-jaune {
+  display: inline-block;
+  width: 10px;
+  height: 15px;
+  background: #fffe00;
+  margin-right: 5px; }
+
+/*# sourceMappingURL=styles.css.map */

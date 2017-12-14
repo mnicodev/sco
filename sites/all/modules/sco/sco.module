@@ -4,7 +4,7 @@ function sco_init() {
 	global $user, $_COOKIE;
 	/* PATCH ANGERS-SCO */
 	/* Redirection prehom en fonction d'un cookie */
-	if(!$_COOKIE["sco"] && $user->uid==0) {
+	if(!isset($_COOKIE["sco"]) && $user->uid==0) {
 		setCookie("sco",1);
 		header("location: /fr/accueil",time()+60*60*24);
 	}
@@ -13,6 +13,13 @@ function sco_init() {
 
 function sco_views_query_alter(&$view,&$query) {
 	global $_GET,$language;
+	if($view->name=="partenaires") {
+		$view->query->where[1]["conditions"][]=array(
+			"field"=>"taxonomy_term_data.language",
+			"value" =>$language->language,
+			"operator"=>"="
+		);
+	}
 	if($view->name=="autour_du_club") {
 //	print_r($language->language);
 		$view->query->where[1]["conditions"][]=array(
@@ -39,16 +46,19 @@ function sco_views_query_alter(&$view,&$query) {
 		
 	}
 	
-	if($view->name=="slider_home") {
+	if($view->name=="diaporama") {
 		$id=arg(1);
+		//print_r($view->query->where);
 		if($id) {
 			$node=node_load(arg(1));
-			$tid=$node->field_tags_diapo["und"][0]["tid"];
+			$tid=$node->field_tags["und"][0]["tid"];
+			
 			if($tid) $view->query->where[1]["conditions"][2]["value"]=$tid;
+			//
 		}
 		//print_r($view);
 	}
-	if($view->name=="actualites") {
+	if($view->name=="taxonomy_term"||$view->name=="actualites") {
 		$arg=arg(1);
 		if($arg) {
 			$term=current(taxonomy_get_term_by_name($arg));
@@ -58,6 +68,17 @@ function sco_views_query_alter(&$view,&$query) {
 				"operator"=>"="
 			);
 			//print_r($view->query);
+		} else {
+			$view->query->where[1]["conditions"][1]["value"]=array();
+			$voc=taxonomy_vocabulary_machine_name_load("tags");
+			$terms = entity_load('taxonomy_term', FALSE, array('vid' => $voc->vid));
+			foreach($terms as $term) {
+				if($term->field_page_liste_actualites["und"][0]["value"]) {
+					$view->query->where[1]["conditions"][1]["value"][]=$term->tid;
+				}
+			}
+			
+
 		}
 
 	}

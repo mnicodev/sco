@@ -1,0 +1,111 @@
+
+@import "define.scss";
+
+@media (min-width: 200px) {
+	#liste_partenaires {
+		@include bloc_partenaires(column);
+		ul.liste_partenaires {
+			height: auto;
+
+			.partenaires, .partenaire-3, .partenaire-1 {
+				@include flex_length(1);
+				width: auto;
+			}
+
+			.partenaire-2 {
+				border-left: none;
+				border-right: none;
+	            border-top: 1px solid $color_border_partenaires;
+            	border-bottom: 1px solid $color_border_partenaires;
+				height: auto;
+
+				ul {
+
+					display: block;
+
+
+					height: auto;
+
+					li {
+						float: left;
+						margin-left: 10px;
+						margin-right: 10px;
+					}
+				}
+
+			}
+			.partenaire-1, .partenaire-3 {
+				h4, ul {
+					margin-left: 10px;
+					width: 100%;
+					text-align: left;
+					padding-left: 0;
+
+					li {
+						text-align: left;
+						@include flex_length(0);
+						margin-right: 10px;
+					}
+				}
+			}
+		}
+	}
+
+
+}
+
+
+@media (min-width: 768px) {
+	#liste_partenaires {
+		@include bloc_partenaires(column);
+		ul.liste_partenaires {
+			height: 300px;
+
+			.partenaires, .partenaire-3, .partenaire-1 {
+				@include flex_length(1);
+				width: 100%;
+				text-align: center;
+				h4 {
+					max-width: 100%;
+					text-align: center;
+					width: 100%;
+				}
+			}
+			.partenaire-3 {
+				ul {
+					width: 100%;
+					li {
+						text-align: center;
+					}
+				}
+			}
+
+			.partenaire-2 {
+				border-left: none;
+				border-right: none;
+	            border-top: 1px solid $color_border_partenaires;
+            	border-bottom: 1px solid $color_border_partenaires;
+
+			}
+
+		}
+	}
+
+
+
+}
+
+
+@media (min-width: 1200px) {
+	#liste_partenaires {
+		@include bloc_partenaires(row);
+		ul.liste_partenaires {
+			.partenaires, .partenaire-3, .partenaire-1 {
+				h4 {
+					text-align: left;
+				}
+			}
+
+		}
+	}
+}

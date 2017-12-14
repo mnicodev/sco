@@ -1,0 +1,275 @@
+@media (min-width: 200px) {
+  #liste_partenaires {
+    background: #000; }
+    #liste_partenaires ul.liste_partenaires {
+      border-bottom: 1px solid #777;
+      height: 100px;
+      margin-left: 0;
+      padding-left: 0;
+      display: flex;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      flex-direction: column;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column; }
+      #liste_partenaires ul.liste_partenaires h4 {
+        margin-bottom: 0;
+        color: #fff;
+        font-weight: normal;
+        text-transform: uppercase;
+        font-size: 12px;
+        text-align: left; }
+      #liste_partenaires ul.liste_partenaires li {
+        list-style: none; }
+      #liste_partenaires ul.liste_partenaires .partenaire-2 {
+        border-top: none;
+        border-bottom: none;
+        border-left: 1px solid #777;
+        border-right: 1px solid #777;
+        flex: 3;
+        -webkit-flex: 3;
+        -ms-flex: 3; }
+        #liste_partenaires ul.liste_partenaires .partenaire-2 ul, #liste_partenaires ul.liste_partenaires .partenaire-2 h4 {
+          max-width: 700px;
+          margin: auto; }
+        #liste_partenaires ul.liste_partenaires .partenaire-2 h4 {
+          margin-top: 10px;
+          padding-left: 10px; }
+      #liste_partenaires ul.liste_partenaires .partenaire-1, #liste_partenaires ul.liste_partenaires .partenaire-3 {
+        flex: 1;
+        -webkit-flex: 1;
+        -ms-flex: 1; }
+        #liste_partenaires ul.liste_partenaires .partenaire-1 ul, #liste_partenaires ul.liste_partenaires .partenaire-3 ul {
+          width: 200px;
+          margin: auto; }
+        #liste_partenaires ul.liste_partenaires .partenaire-1 h4, #liste_partenaires ul.liste_partenaires .partenaire-3 h4 {
+          width: 200px;
+          margin: auto;
+          margin-top: 10px;
+          padding-left: 10px; }
+      #liste_partenaires ul.liste_partenaires .partenaires {
+        height: 100px; }
+        #liste_partenaires ul.liste_partenaires .partenaires ul {
+          height: 80px;
+          padding-left: 0;
+          display: flex;
+          display: -webkit-flex;
+          display: -ms-flexbox;
+          flex-direction: row;
+          -webkit-flex-direction: row;
+          -ms-flex-direction: row;
+          flex-wrap: nowrap;
+          -webkit-flex-wrap: nowrap;
+          -ms-flex-wrap: nowrap; }
+          #liste_partenaires ul.liste_partenaires .partenaires ul li {
+            flex: 1;
+            -webkit-flex: 1;
+            -ms-flex: 1;
+            text-align: center;
+            line-height: 80px; }
+      #liste_partenaires ul.liste_partenaires .partenaire-3 h4 {
+        padding-left: 0; }
+      #liste_partenaires ul.liste_partenaires .partenaire-3 ul li {
+        text-align: left; }
+    #liste_partenaires ul.liste_partenaires {
+      height: auto; }
+      #liste_partenaires ul.liste_partenaires .partenaires, #liste_partenaires ul.liste_partenaires .partenaire-3, #liste_partenaires ul.liste_partenaires .partenaire-1 {
+        flex: 1;
+        -webkit-flex: 1;
+        -ms-flex: 1;
+        width: auto; }
+      #liste_partenaires ul.liste_partenaires .partenaire-2 {
+        border-left: none;
+        border-right: none;
+        border-top: 1px solid #777;
+        border-bottom: 1px solid #777;
+        height: auto; }
+        #liste_partenaires ul.liste_partenaires .partenaire-2 ul {
+          display: block;
+          height: auto; }
+          #liste_partenaires ul.liste_partenaires .partenaire-2 ul li {
+            float: left;
+            margin-left: 10px;
+            margin-right: 10px; }
+      #liste_partenaires ul.liste_partenaires .partenaire-1 h4, #liste_partenaires ul.liste_partenaires .partenaire-1 ul, #liste_partenaires ul.liste_partenaires .partenaire-3 h4, #liste_partenaires ul.liste_partenaires .partenaire-3 ul {
+        margin-left: 10px;
+        width: 100%;
+        text-align: left;
+        padding-left: 0; }
+        #liste_partenaires ul.liste_partenaires .partenaire-1 h4 li, #liste_partenaires ul.liste_partenaires .partenaire-1 ul li, #liste_partenaires ul.liste_partenaires .partenaire-3 h4 li, #liste_partenaires ul.liste_partenaires .partenaire-3 ul li {
+          text-align: left;
+          flex: 0;
+          -webkit-flex: 0;
+          -ms-flex: 0;
+          margin-right: 10px; } }
+@media (min-width: 768px) {
+  #liste_partenaires {
+    background: #000; }
+    #liste_partenaires ul.liste_partenaires {
+      border-bottom: 1px solid #777;
+      height: 100px;
+      margin-left: 0;
+      padding-left: 0;
+      display: flex;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      flex-direction: column;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column; }
+      #liste_partenaires ul.liste_partenaires h4 {
+        margin-bottom: 0;
+        color: #fff;
+        font-weight: normal;
+        text-transform: uppercase;
+        font-size: 12px;
+        text-align: left; }
+      #liste_partenaires ul.liste_partenaires li {
+        list-style: none; }
+      #liste_partenaires ul.liste_partenaires .partenaire-2 {
+        border-top: none;
+        border-bottom: none;
+        border-left: 1px solid #777;
+        border-right: 1px solid #777;
+        flex: 3;
+        -webkit-flex: 3;
+        -ms-flex: 3; }
+        #liste_partenaires ul.liste_partenaires .partenaire-2 ul, #liste_partenaires ul.liste_partenaires .partenaire-2 h4 {
+          max-width: 700px;
+          margin: auto; }
+        #liste_partenaires ul.liste_partenaires .partenaire-2 h4 {
+          margin-top: 10px;
+          padding-left: 10px; }
+      #liste_partenaires ul.liste_partenaires .partenaire-1, #liste_partenaires ul.liste_partenaires .partenaire-3 {
+        flex: 1;
+        -webkit-flex: 1;
+        -ms-flex: 1; }
+        #liste_partenaires ul.liste_partenaires .partenaire-1 ul, #liste_partenaires ul.liste_partenaires .partenaire-3 ul {
+          width: 200px;
+          margin: auto; }
+        #liste_partenaires ul.liste_partenaires .partenaire-1 h4, #liste_partenaires ul.liste_partenaires .partenaire-3 h4 {
+          width: 200px;
+          margin: auto;
+          margin-top: 10px;
+          padding-left: 10px; }
+      #liste_partenaires ul.liste_partenaires .partenaires {
+        height: 100px; }
+        #liste_partenaires ul.liste_partenaires .partenaires ul {
+          height: 80px;
+          padding-left: 0;
+          display: flex;
+          display: -webkit-flex;
+          display: -ms-flexbox;
+          flex-direction: row;
+          -webkit-flex-direction: row;
+          -ms-flex-direction: row;
+          flex-wrap: nowrap;
+          -webkit-flex-wrap: nowrap;
+          -ms-flex-wrap: nowrap; }
+          #liste_partenaires ul.liste_partenaires .partenaires ul li {
+            flex: 1;
+            -webkit-flex: 1;
+            -ms-flex: 1;
+            text-align: center;
+            line-height: 80px; }
+      #liste_partenaires ul.liste_partenaires .partenaire-3 h4 {
+        padding-left: 0; }
+      #liste_partenaires ul.liste_partenaires .partenaire-3 ul li {
+        text-align: left; }
+    #liste_partenaires ul.liste_partenaires {
+      height: 300px; }
+      #liste_partenaires ul.liste_partenaires .partenaires, #liste_partenaires ul.liste_partenaires .partenaire-3, #liste_partenaires ul.liste_partenaires .partenaire-1 {
+        flex: 1;
+        -webkit-flex: 1;
+        -ms-flex: 1;
+        width: 100%;
+        text-align: center; }
+        #liste_partenaires ul.liste_partenaires .partenaires h4, #liste_partenaires ul.liste_partenaires .partenaire-3 h4, #liste_partenaires ul.liste_partenaires .partenaire-1 h4 {
+          max-width: 100%;
+          text-align: center;
+          width: 100%; }
+      #liste_partenaires ul.liste_partenaires .partenaire-3 ul {
+        width: 100%; }
+        #liste_partenaires ul.liste_partenaires .partenaire-3 ul li {
+          text-align: center; }
+      #liste_partenaires ul.liste_partenaires .partenaire-2 {
+        border-left: none;
+        border-right: none;
+        border-top: 1px solid #777;
+        border-bottom: 1px solid #777; } }
+@media (min-width: 1200px) {
+  #liste_partenaires {
+    background: #000; }
+    #liste_partenaires ul.liste_partenaires {
+      border-bottom: 1px solid #777;
+      height: 100px;
+      margin-left: 0;
+      padding-left: 0;
+      display: flex;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      flex-direction: row;
+      -webkit-flex-direction: row;
+      -ms-flex-direction: row; }
+      #liste_partenaires ul.liste_partenaires h4 {
+        margin-bottom: 0;
+        color: #fff;
+        font-weight: normal;
+        text-transform: uppercase;
+        font-size: 12px;
+        text-align: left; }
+      #liste_partenaires ul.liste_partenaires li {
+        list-style: none; }
+      #liste_partenaires ul.liste_partenaires .partenaire-2 {
+        border-top: none;
+        border-bottom: none;
+        border-left: 1px solid #777;
+        border-right: 1px solid #777;
+        flex: 3;
+        -webkit-flex: 3;
+        -ms-flex: 3; }
+        #liste_partenaires ul.liste_partenaires .partenaire-2 ul, #liste_partenaires ul.liste_partenaires .partenaire-2 h4 {
+          max-width: 700px;
+          margin: auto; }
+        #liste_partenaires ul.liste_partenaires .partenaire-2 h4 {
+          margin-top: 10px;
+          padding-left: 10px; }
+      #liste_partenaires ul.liste_partenaires .partenaire-1, #liste_partenaires ul.liste_partenaires .partenaire-3 {
+        flex: 1;
+        -webkit-flex: 1;
+        -ms-flex: 1; }
+        #liste_partenaires ul.liste_partenaires .partenaire-1 ul, #liste_partenaires ul.liste_partenaires .partenaire-3 ul {
+          width: 200px;
+          margin: auto; }
+        #liste_partenaires ul.liste_partenaires .partenaire-1 h4, #liste_partenaires ul.liste_partenaires .partenaire-3 h4 {
+          width: 200px;
+          margin: auto;
+          margin-top: 10px;
+          padding-left: 10px; }
+      #liste_partenaires ul.liste_partenaires .partenaires {
+        height: 100px; }
+        #liste_partenaires ul.liste_partenaires .partenaires ul {
+          height: 80px;
+          padding-left: 0;
+          display: flex;
+          display: -webkit-flex;
+          display: -ms-flexbox;
+          flex-direction: row;
+          -webkit-flex-direction: row;
+          -ms-flex-direction: row;
+          flex-wrap: nowrap;
+          -webkit-flex-wrap: nowrap;
+          -ms-flex-wrap: nowrap; }
+          #liste_partenaires ul.liste_partenaires .partenaires ul li {
+            flex: 1;
+            -webkit-flex: 1;
+            -ms-flex: 1;
+            text-align: center;
+            line-height: 80px; }
+      #liste_partenaires ul.liste_partenaires .partenaire-3 h4 {
+        padding-left: 0; }
+      #liste_partenaires ul.liste_partenaires .partenaire-3 ul li {
+        text-align: left; }
+    #liste_partenaires ul.liste_partenaires .partenaires h4, #liste_partenaires ul.liste_partenaires .partenaire-3 h4, #liste_partenaires ul.liste_partenaires .partenaire-1 h4 {
+      text-align: left; } }
+
+/*# sourceMappingURL=liste_partenaires.css.map */

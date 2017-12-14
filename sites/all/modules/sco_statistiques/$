@@ -1,0 +1,100 @@
+<?php
+
+global $api_key, $secret_key;
+$api_key="bbftgjym8a6dgzvjgjzkyjt9";
+$secret_key="PUG2YDkFKw";
+
+
+function sco_statistiques_menu() {
+	$items["equipe-pro/tous-les-resultats"]= array(
+		"title" => "Tous les résultats",
+		"page callback"=> 'get_all_results_page',
+		"access callback"=>TRUE
+	);
+	return $items;
+}
+
+
+function get_all_results_page() {
+	global $api_key, $secret_key;
+	$url="http://api.stats.com/v1/stats/soccer/fran/participants/teams/".theme_get_setting("id_team","sco")."?api_key=".$api_key;
+	$sig=hash("sha256",$api_key.$secret_key.time());
+	$url=$url."&sig=".$sig;
+	$c =curl_init();
+	curl_setopt($c,CURLOPT_URL,$url);
+	curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($c, CURLOPT_HEADER, false);
+	$output = curl_exec($c);
+
+	if($output===false) $data=array("error"=>"Error curl : ".curl_error($c,E_USER_WARNING));
+	else {
+		$json=json_decode($output);
+		//$result=current(current(current($json->apiResults)->league->season->conferences)->divisions)->teams;
+
+		print_r($json);
+	}
+
+
+	return theme("sco_statistiques_custompage_template",$data);
+}
+
+function sco_statistiques_theme() {
+	return array(
+		"sco_statistiques_custompage_template" => array(
+			'template' => 'custompage',
+			'arguments' => array(),
+		),
+	);
+}
+
+
+
+function sco_statistiques_init() {
+
+}
+
+
+function sco_statistiques_node_insert($node) {
+
+}
+
+function sco_statistiques_node_update($node) {
+	global $api_key, $secret_key;
+	$url="http://api.stats.com/v1/stats/soccer/fran/participants/teams/".theme_get_setting("id_team","sco")."?api_key=".$api_key;
+	$sig=hash("sha256",$api_key.$secret_key.time());
+	$url=$url."&sig=".$sig;
+	$c =curl_init();
+	curl_setopt($c,CURLOPT_URL,$url);
+	curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($c, CURLOPT_HEADER, false);
+	$output = curl_exec($c);
+	$name=$node->title; // on récupére le nom complet du joueur
+	if($output===false) $id_player=0;
+	else {
+		$json=json_decode($output);
+		$result=current($json->apiResults)->league->players;
+
+		foreach($result as $item) {
+			if($item->displayName==$name) {
+				$id_player=$item->playerId;
+				break;
+			}
+
+		}
+	}
+
+	/*$node->field_id_player["und"]=array();
+	$node->field_id_player["und"][0]["value"]=$id_player;
+	node_save($node);*/
+
+	echo $id_player;
+	exit;
+
+}
+
+function search_id_player($name) {
+}
+
+
+
+

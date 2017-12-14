@@ -1,0 +1,269 @@
+@import url(bootstrap.min.css);
+body {
+  font-family: 'Ubuntu', sans-serif; }
+
+#container {
+  position: relative; }
+
+body {
+  overflow-x: hidden;
+  padding-top: 0 !important; }
+  body #container {
+    width: 100%;
+    background: #000 url(../img/fond_prehome.jpg) no-repeat center center;
+    background-size: cover; }
+    @media (min-width: 200px) {
+      body #container {
+        position: relative; } }
+    @media (min-width: 992px) and (min-height: 420px) {
+      body #container {
+        position: relative;
+        height: 700px; } }
+    @media (min-width: 992px) and (min-height: 720px) {
+      body #container {
+        position: fixed;
+        height: 100%; } }
+    @media (min-width: 200px) {
+      body #container #footer {
+        position: relative;
+        clear: both; } }
+    @media (min-width: 992px) {
+      body #container #footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%; } }
+
+#toolbar {
+  display: none; }
+
+#content {
+  /*@media (min-height: 420px) {top:0;}*/
+  /*@media (min-height: 720px) {top:10%;}*/
+  max-width: 962px;
+  width: 100%;
+  margin: auto; }
+  @media (min-width: 200px) {
+    #content {
+      position: relative; } }
+  @media (min-width: 992px) and (min-height: 720px) {
+    #content {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 10%; } }
+  #content .header {
+    position: relative; }
+    @media (min-width: 200px) {
+      #content .header {
+        height: 90px;
+        background: url(../img/prehome_logo.png) no-repeat 10px 10px;
+        background-size: 50%; } }
+    @media (min-width: 590px) {
+      #content .header {
+        height: 130px;
+        background: url(../img/prehome_logo.png) no-repeat left top;
+        background-size: initial; } }
+    #content .header .block {
+      position: initial; }
+    #content .header .network, #content .header #block-locale-language {
+      position: absolute;
+      right: 10px;
+      top: 0; }
+      @media (min-width: 200px) {
+        #content .header .network, #content .header #block-locale-language {
+          padding-top: 20px; } }
+      @media (min-width: 580px) {
+        #content .header .network, #content .header #block-locale-language {
+          padding-top: 40px; } }
+    #content .header .network {
+      right: 60px; }
+    #content .header #block-locale-language .title-lang {
+      color: #fff;
+      text-transform: uppercase;
+      background: url(../img/fleche.jpg) no-repeat center right;
+      padding-right: 15px;
+      cursor: pointer; }
+    #content .header #block-locale-language ul {
+      padding: 0;
+      margin: 0;
+      display: none; }
+      #content .header #block-locale-language ul li {
+        list-style: none; }
+        #content .header #block-locale-language ul li a {
+          color: #fff !important;
+          text-transform: uppercase; }
+  #content .content-top {
+    position: relative; }
+    #content .content-top .angers-sco-enter {
+      position: relative;
+      height: 230px;
+      background: url(../img/fond_angers-sco.jpg) no-repeat center center;
+      background-size: cover; }
+      #content .content-top .angers-sco-enter p {
+        text-transform: uppercase;
+        color: #fff;
+        font-size: 18px;
+        padding: 15px;
+        display: block; }
+      #content .content-top .angers-sco-enter a {
+        padding: 15px;
+        display: block;
+        text-align: center;
+        text-transform: uppercase;
+        color: #fff;
+        background: #B69979;
+        margin: 15px;
+        color: #000;
+        width: 100px;
+        position: absolute;
+        bottom: 0;
+        font-weight: bold; }
+    #content .content-top .boutique {
+      text-align: center;
+      color: #fff;
+      text-transform: uppercase;
+      font-size: 22px;
+      padding-top: 12px;
+      background: url(../img/prehome_boutique.jpg) no-repeat center center; }
+      #content .content-top .boutique a {
+        color: #fff; }
+      @media (min-width: 200px) {
+        #content .content-top .boutique {
+          float: left;
+          width: 100%;
+          margin: 0;
+          height: 172px;
+          background-size: cover;
+          margin-top: 10px; } }
+      @media (min-width: 500px) {
+        #content .content-top .boutique {
+          float: left;
+          width: 49%;
+          height: 172px;
+          margin: 0px;
+          margin-top: 10px; } }
+      @media (min-width: 992px) {
+        #content .content-top .boutique {
+          width: 308px;
+          height: 172px;
+          margin: 0;
+          margin-top: 10px; } }
+    #content .content-top .billets {
+      text-align: center;
+      color: #fff;
+      text-transform: uppercase;
+      font-size: 22px;
+      padding-top: 12px;
+      height: 172px;
+      background: url(../img/prehome_billets.jpg) no-repeat center center; }
+      #content .content-top .billets a {
+        font-size: 14px;
+        color: #fff;
+        display: block;
+        width: 95px;
+        text-align: center;
+        margin: auto;
+        padding-top: 15px; }
+      @media (min-width: 200px) {
+        #content .content-top .billets {
+          float: left;
+          width: 100%;
+          margin: 0;
+          height: 172px;
+          background-size: cover;
+          margin-top: 10px; } }
+      @media (min-width: 500px) {
+        #content .content-top .billets {
+          float: right;
+          width: 49%;
+          background-size: cover;
+          height: 172px;
+          margin: 0px;
+          margin-top: 10px; } }
+      @media (min-width: 992px) {
+        #content .content-top .billets {
+          float: left;
+          width: 308px;
+          height: 172px;
+          margin: 0;
+          margin-top: 10px;
+          margin-left: 10px; } }
+    #content .content-top .fondation, #content .content-top .easy {
+      height: 82px; }
+      #content .content-top .fondation a, #content .content-top .easy a {
+        color: #fff;
+        display: block;
+        line-height: 82px;
+        text-transform: uppercase;
+        font-size: 24px;
+        text-align: center; }
+    #content .content-top .fondation {
+      background: url(../img/prehome_fondation.jpg) no-repeat center center;
+      background-size: cover; }
+      @media (min-width: 200px) {
+        #content .content-top .fondation {
+          float: left;
+          width: 100%;
+          margin: 0;
+          margin-top: 10px; } }
+      @media (min-width: 500px) {
+        #content .content-top .fondation {
+          float: left;
+          width: 49%;
+          margin: 0;
+          margin-top: 10px; } }
+      @media (min-width: 992px) {
+        #content .content-top .fondation {
+          float: left;
+          width: 326px;
+          margin: 0;
+          margin-top: 10px;
+          margin-left: 10px; } }
+    #content .content-top .easy {
+      background: url(../img/prehome_easy.jpg) no-repeat center center;
+      background-size: cover; }
+      @media (min-width: 200px) {
+        #content .content-top .easy {
+          float: left;
+          width: 100%;
+          margin: 0;
+          margin-top: 10px; } }
+      @media (min-width: 500px) {
+        #content .content-top .easy {
+          float: right;
+          width: 49%;
+          margin: 0;
+          margin-top: 10px; } }
+      @media (min-width: 992px) {
+        #content .content-top .easy {
+          float: left;
+          width: 326px;
+          margin: 0;
+          margin-top: 10px;
+          margin-left: 10px; } }
+
+.network {
+  width: 115px;
+  margin: auto; }
+  .network .item {
+    width: 35px;
+    height: 25px;
+    float: left;
+    text-align: center; }
+    .network .item a {
+      text-indent: -9999px;
+      width: 25px;
+      height: 22px;
+      display: inline-block; }
+    .network .item.facebook {
+      background: url(../img/facebook.jpg) no-repeat;
+      background-position: center center; }
+    .network .item.twitter {
+      background: url(../img/twitter.jpg) no-repeat;
+      background-position: center center; }
+    .network .item.instagram {
+      background: url(../img/instagram.jpg) no-repeat;
+      background-position: center center;
+      width: 45px; }
+
+/*# sourceMappingURL=style.css.map */

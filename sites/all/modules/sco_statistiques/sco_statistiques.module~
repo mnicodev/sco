@@ -1,0 +1,561 @@
+<?php
+
+global $api_key, $secret_key,$keys,$league;
+$keys["fran"]=array(
+	"api_key"=>"bbftgjym8a6dgzvjgjzkyjt9",
+	"secret_key"=>"PUG2YDkFKw"
+);
+$keys["fran2"]=array(
+	"api_key"=>"zdbnjftb2evrfpegg6k6gwse",
+	"secret_key"=>"GtJkrbAcJQ"
+);
+$keys["francup"]=array(
+	"api_key"=>"vppdxwynyjm9mjehmzyfverg",
+	"secret_key"=>"9Yp5r5aQMq"
+);
+
+
+function sco_statistiques_menu() {
+	$items["equipe-pro/tous-les-resultats"]= array(
+		"title" => "Tous les résultats",
+		"page callback"=> 'get_all_results_page',
+		"access callback"=>TRUE
+	);
+	$items["equipe-pro/tous-les-resultats/%"]= array(
+		"title" => "Saison ".arg(2),
+		"page callback"=> 'get_all_results_page',
+		"page arguments" => array(1),
+		"access callback"=>TRUE
+	);
+	$items["equipe-pro/tous-les-resultats/%/%"]= array(
+		"title" => "Feuille de match",
+		"page callback"=> 'get_fiche_match',
+		"page arguments" => array(1),
+		"access callback"=>TRUE
+	);
+	$items["equipe-pro/resultats-journees"]=array(
+		"title" => "Résultats de la journée L1",
+		"page callback" => "get_results_journee_page",
+		"access callback" => TRUE
+	);
+	$items["equipe-pro/resultats-journees/%"]=array(
+		"title" => "Résultats de la journée L1",
+		"page callback" => "get_results_journee_page",
+		"page arguments" => array(1),
+		"access callback" => TRUE
+	);
+	return $items;
+}
+
+
+function get_json($api,$league) {
+	global $keys,$api_key, $secret_key;
+	$url=$api."api_key=".$keys[$league]["api_key"];
+	$sig=hash("sha256",$keys[$league]["api_key"].$keys[$league]["secret_key"].time());
+	$url=$url."&sig=".$sig;
+	$c =curl_init();
+	curl_setopt($c,CURLOPT_URL,$url);
+	curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($c, CURLOPT_HEADER, false);
+	$output = curl_exec($c);
+	return $output;
+}
+
+function get_results_journee_page() {
+	global $keys,$language;
+
+	$teams=null;
+	$url=array(
+		"fr"=>"/fr/equipe-pro/resultats-journees",
+		"en"=>"/en/team-pro/days-results",
+	);
+
+	if(date("m")>=8 && date("m")<=12) $saison=date("Y");
+	else $saison=date("Y")-1;
+
+	$json=json_decode(get_json("http://api.stats.com/v1/stats/soccer/fran/stats/teams/".theme_get_setting("id_team","sco")."/events/?season=".$saison."&","fran"));
+	$rs=$json->apiResults[0]->league->teams[0]->seasons[0]->eventType[0]->splits[0]->events;
+	$last_journee=count($rs);
+	if(!arg(2)) {
+		$journee=$last_journee;
+	} else $journee=arg(2);
+
+
+	if(!$data["content"]=variable_get("journee_".$saison."_".$journee) || $last_journee<$journee) {
+		$json=json_decode(get_json("http://api.stats.com/v1/stats/soccer/fran/matches/?season=".$saison."&","fran"));
+		
+		$rs=$json->apiResults[0]->league->season->eventType[0]->matches;
+		$liste_journees=array();
+	
+		foreach($rs as $item) {
+			$test_date=$item->startDate[0]->year.$item->startDate[0]->month.$item->startDate[0]->date;
+			$jour=format_date(mktime(0,0,0,$item->startDate[0]->month,$item->startDate[0]->date,$item->startDate[0]->year),"custom","l d F");
+	
+			$matchs[$item->week][$jour][]=array(
+				"team_1"=>array(
+					"name"=>$item->teams[0]->displayName,
+					"score"=>$item->teams[0]->score
+				),
+				"team_2"=>array(
+					"name"=>$item->teams[1]->displayName,
+					"score"=>$item->teams[1]->score
+				),
+				"heure"=>$item->startDate[0]->hour.":".($item->startDate[0]->minute==0?"0".$item->startDate[0]->minute:$item->startDate[0]->minute),
+	
+			);
+		}
+	
+	
+		$data["matchs"]=$matchs;
+		$data["journee"]=$journee;
+		$data["url"]=$url[$language->language];
+		
+		variable_set("journee_".$saison."_".$journee,theme("sco_statistiques_resultat_journee",$data));
+	}  
+
+	return theme("sco_statistiques_resultat_journee",$data);
+
+
+
+}
+
+function get_fiche_match() {
+	$data["saison"]=arg(2);
+
+	if(!$data["content"]=variable_get("fiche_".arg(3))) {
+		$output=json_decode(get_json("http://api.stats.com/v1/stats/soccer/fran/matches/".arg(3)."?box=true&season=".arg(2)."&","fran"));
+		if($output->message=="Data not found")
+			$output=json_decode(get_json("http://api.stats.com/v1/stats/soccer/fran2/matches/".arg(3)."?box=true&season=".arg(2)."&","fran2"));
+			
+		$json=current($output->apiResults)->league->season->eventType[0]->matches[0];
+		//	foreach($json as $item) print_r($item);
+	//	print_r(current($output->apiResults)->league);
+		$data["date"]=format_date(mktime($json->startDate[0]->hour,$json->startDate[0]->minute,0,$json->startDate[0]->month,$json->startDate[0]->date,$json->startDate[0]->year),"custom","l d F Y - H:i");
+		$data["ligue"]=current($output->apiResults)->league->displayName;
+	
+		foreach($json->teams as $team){
+			$data["teams"][$team->teamId]=array(
+				"team_id"=>$team->teamId,
+				"name"=>$team->displayName,
+				"score"=>$team->score,
+			);
+		}
+	
+		foreach($json->boxscores as $boxscore) {
+			$id=0;	
+			foreach($boxscore->playerMatchStats as $item) {
+				$data["teams"][$boxscore->teamId]["joueurs"][$item->player->playerId]=array(
+					"player_id"=>$item->player->playerId,
+					"name"=>$item->player->displayName,
+					"numero"=>(int)$item->player->uniform,
+					"goals"=>$item->goals->total,
+					"carton_jaune"=>$item->allYellowCards,
+					"carton_rouge"=>$item->redCards,
+					"game_start"=>(int)$item->isGameStarted,
+					"in_match"=>1
+				);
+	
+			}
+	
+			foreach($boxscore->benchPlayers as $item) {
+				$data["teams"][$boxscore->teamId]["joueurs"][$item->player->playerId]=array(
+					"player_id"=>$item->player->playerId,
+					"name"=>$item->player->displayName,
+					"numero"=>(int)$item->player->uniform,
+					"in_match"=>0
+				);
+				$id++;
+	
+			}
+	
+		}
+	
+		// buts marqués
+	
+				foreach($json->periodDetails as $periode) {
+					foreach($periode->goals as $goal) {
+						$data["teams"][$goal->team->teamId]["goals"][]=array(
+							"joueur"=>$goal->player->displayName,
+							"time"=>$goal->time->minutes
+						);
+					}
+	
+					foreach($periode->substitutions as $substitution) {
+						$data["teams"][$substitution->team->teamId]["joueurs"][$substitution->playerIn->playerId]["time_substitution"]=$substitution->time->minutes;
+						$data["teams"][$substitution->team->teamId]["joueurs"][$substitution->playerOut->playerId]["time_substitution"]=$substitution->time->minutes;
+					}
+	
+				}
+		// ****
+	
+		foreach($data["teams"] as $key=>&$team) {
+			$i=0;
+			foreach($team["joueurs"] as $id=>$joueur) {
+				$team["joueurs"][$i++]=$joueur;
+				unset($data["teams"][$key]["joueurs"][$id]);
+			}
+		}
+	
+		foreach($data["teams"] as $key=>&$team) {
+			for($i=0;$i<count($team["joueurs"])-1;$i++) {
+				for($j=$i+1;$j<count($team["joueurs"]);$j++) {
+					//echo $team["joueurs"][$i]["numero"]." - ".$team["joueurs"][$j]["numero"]."<br>";
+					if($team["joueurs"][$i]["numero"]>$team["joueurs"][$j]["numero"]) {
+						$tmp=$data["teams"][$key]["joueurs"][$i];
+						$data["teams"][$key]["joueurs"][$i]=$data["teams"][$key]["joueurs"][$j];
+						$data["teams"][$key]["joueurs"][$j]=$tmp;
+					}
+				}
+			}
+	
+		}
+	
+		$data["arbitres"]=array(
+			"referee"=>$json->gameDetail->referee->name,
+			"referee_assistant"=>array($json->gameDetail->refereeAssistants[0]->name,$json->gameDetail->refereeAssistants[1]->name),
+			"fourth"=>$json->gameDetail->fourthOfficial->name
+	
+		);
+
+		variable_set("fiche_".arg(3),theme("sco_statistiques_fiche_match",$data));
+	}
+
+	return theme("sco_statistiques_fiche_match",$data);
+
+}
+
+function get_all_results_page() {
+
+	global $keys,$api_key, $secret_key,$_GET,$league,$_SERVER,$language;
+
+	if(arg(3)) {
+		//return get_fiche_match();
+	}
+	$league="fran";
+	$url=array(
+		"fr"=>"/fr/equipe-pro/tous-les-resultats",
+		"en"=>"/en/team-pro/all-the-results",
+	);
+
+
+
+	if(is_numeric(arg(2))) $saison=arg(2);
+	elseif(isset($_GET["saison"])) $saison=$_GET["saison"];
+	else if(date("m")>=8 && date("m")<=12) $saison=date("Y");
+	else $saison=date("Y")-1;
+
+	$output=get_json("http://api.stats.com/v1/stats/soccer/fran/stats/teams/".theme_get_setting("id_team","sco")."/events/?season=".$saison."&","fran");
+	
+	if($output===false) $data=array("error"=>"Error curl : ".curl_error($c,E_USER_WARNING));
+	else {
+		$json=json_decode($output);
+		if($json->message=="Data not found") {
+			$league="fran2";
+			$output=get_json("http://api.stats.com/v1/stats/soccer/fran2/stats/teams/".theme_get_setting("id_team","sco")."/events/?season=".$saison."&","fran2");
+			$json=json_decode($output);
+
+
+		}	
+		$result=current($json->apiResults)->league->teams[0]->seasons[0]->eventType[0]->splits[0]->events;
+		foreach($result as $item) {
+			$mois=format_date(mktime(0,0,0,$item->startDate[0]->month,$item->startDate[0]->date,$item->startDate[0]->year),"custom","F");
+			$match[$mois." ".$item->startDate[0]->year][$item->eventId]=array(
+				"ligue"=>$league,
+				"location"=>$item->team->teamLocationType->name,
+				"adversaire"=>$item->opponentTeam->displayName,
+				"date"=>date("d/m/Y",mktime(0,0,0,$item->startDate[0]->month,$item->startDate[0]->date,$item->startDate[0]->year))." - ".$item->startDate[0]->hour.":".($item->startDate[0]->minute==0?"0".$item->startDate[0]->minute:$item->startDate[0]->minute),
+				"sco_score"=>$item->outcome->teamScore,
+				"adv_score"=>$item->outcome->opponentTeamScore
+
+			);
+			//print_r($item);
+		}
+		
+		$league="francup";
+		$output=get_json("http://api.stats.com/v1/stats/soccer/francup/stats/teams/".theme_get_setting("id_team","sco")."/events/?season=".$saison."&","francup");
+		$json=json_decode($output);
+		$result=current($json->apiResults)->league->teams[0]->seasons[0]->eventType[0]->splits[0]->events;
+		foreach($result as $item) {
+			$mois=format_date(mktime(0,0,0,$item->startDate[0]->month+1,$item->startDate[0]->day,$item->startDate[0]->year),"custom","F");
+			$match[$mois." ".$item->startDate[0]->year][$item->eventId]=array(
+				"ligue"=>$league,
+				"location"=>$item->team->teamLocationType->name,
+				"adversaire"=>$item->opponentTeam->displayName,
+				"date"=>date("d/m/Y",mktime(0,0,0,$item->startDate[0]->month,$item->startDate[0]->date,$item->startDate[0]->year))." - ".$item->startDate[0]->hour.":".($item->startDate[0]->minute==0?"0".$item->startDate[0]->minute:$item->startDate[0]->minute),
+				"sco_score"=>$item->outcome->teamScore,
+				"adv_score"=>$item->outcome->opponentTeamScore
+
+			);
+			//print_r($item);
+		}
+
+		$data["matchs"]=$match;
+		$data["saison"]=$saison;
+		if(date("m")>=8 && date("m")<=12) $saison=date("Y");
+		else $saison=date("Y")-1;
+		for($i=$saison;$i>2011;$i--) 
+			$data["saisons"][$i]=$i."/".($i+1);
+
+		$data["url"]=$url[$language->language];
+	}
+
+
+	return theme("sco_statistiques_custompage_template",$data);
+}
+
+
+
+
+function sco_statistiques_init() {
+
+}
+
+
+function search_id_player($name) {
+	global $api_key, $secret_key;
+	$url="http://api.stats.com/v1/stats/soccer/fran/participants/teams/".theme_get_setting("id_team","sco")."?api_key=".$api_key;
+	$sig=hash("sha256",$api_key.$secret_key.time());
+	$url=$url."&sig=".$sig;
+	$c =curl_init();
+	curl_setopt($c,CURLOPT_URL,$url);
+	curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($c, CURLOPT_HEADER, false);
+	$output = curl_exec($c);
+	$id_player=0;
+	if($output===false) $id_player=0;
+	else {
+		$json=json_decode($output);
+		$result=current($json->apiResults)->league->players;
+
+		foreach($result as $item) {
+			if(strtolower($item->displayName)==strtolower($name)) {
+				$id_player=$item->playerId;
+				break;
+			}
+
+		}
+	}
+	return $id_player;
+
+
+}
+
+function sco_statistiques_node_insert($node) {
+	if($node->type!="joueur") return;
+	$id_player=search_id_player($node->title);
+	db_insert('field_data_field_id_player')
+    	->fields(array(
+      		'entity_type' => "node",
+			'bundle' => "joueur",
+			"deleted"=>0,
+			"entity_id"=>$node->nid,
+			"revision_id"=>$node->nid,
+			"language"=>"und",
+			"delta"=>0,
+			"field_id_player_value"=>$id_player
+    	)
+	)
+    ->execute();
+	db_insert('field_revision_field_id_player')
+    	->fields(array(
+      		'entity_type' => "node",
+			'bundle' => "joueur",
+			"deleted"=>0,
+			"entity_id"=>$node->nid,
+			"revision_id"=>$node->nid,
+			"language"=>"und",
+			"delta"=>0,
+			"field_id_player_value"=>$id_player
+    	)
+	)
+	->execute();
+
+}
+
+function data_save($action,$data,$value,$id) {
+	if($action=="insert") {
+		db_insert('field_data_field_'.$data)
+    	->fields(array(
+      		'entity_type' => "node",
+			'bundle' => "joueur",
+			"deleted"=>0,
+			"entity_id"=>$id,
+			"revision_id"=>$id,
+			"language"=>"und",
+			"delta"=>0,
+			"field_".$data."_value"=>$value
+    	)
+		)
+    	->execute();
+		db_insert('field_revision_field_'.$data)
+    	->fields(array(
+      		'entity_type' => "node",
+			'bundle' => "joueur",
+			"deleted"=>0,
+			"entity_id"=>$id,
+			"revision_id"=>$id,
+			"language"=>"und",
+			"delta"=>0,
+			"field_".$data."_value"=>$value
+    	)
+		)
+		->execute();
+	} else {
+		db_update('field_data_field_'.$data)
+    	->fields(array(
+      		'entity_type' => "node",
+			'bundle' => "joueur",
+			"deleted"=>0,
+			"entity_id"=>$id,
+			"revision_id"=>$id,
+			"language"=>"und",
+			"delta"=>0,
+			"field_".$data."_value"=>$value
+    		)
+		)
+		->condition("entity_id",$id,"=")
+    	->execute();
+		db_update('field_revision_field_'.$data)
+    	->fields(array(
+      		'entity_type' => "node",
+			'bundle' => "joueur",
+			"deleted"=>0,
+			"entity_id"=>$id,
+			"revision_id"=>$id,
+			"language"=>"und",
+			"delta"=>0,
+			"field_".$data."_value"=>$value
+    		)
+		)
+		->condition("entity_id",$id,"=")
+    	->execute();
+	}
+}
+
+function sco_statistiques_node_update($node) {
+	global $api_key, $secret_key;
+	if($node->type!="joueur") return;
+	//$id_player=search_id_player($node->title);
+	//echo $node->field_id_player["und"][0]["value"];exit;
+	if(!isset($node->field_id_player["und"][0]["value"])) {
+	//node_save($node);
+		db_insert('field_data_field_id_player')
+    	->fields(array(
+      		'entity_type' => "node",
+			'bundle' => "joueur",
+			"deleted"=>0,
+			"entity_id"=>$node->nid,
+			"revision_id"=>$node->nid,
+			"language"=>"und",
+			"delta"=>0,
+			"field_id_player_value"=>$id_player
+    	)
+		)
+    	->execute();
+		db_insert('field_revision_field_id_player')
+    	->fields(array(
+      		'entity_type' => "node",
+			'bundle' => "joueur",
+			"deleted"=>0,
+			"entity_id"=>$node->nid,
+			"revision_id"=>$node->nid,
+			"language"=>"und",
+			"delta"=>0,
+			"field_id_player_value"=>$id_player
+    	)
+		)
+		->execute();
+	}
+
+		$carriere=null;
+
+		$total=array(
+			"matchs"=>0,
+			"buts"=>0
+		);
+		if(date("m")>=8 && date("m")<=12) $saison=date("Y");
+		else $saison=date("Y")-1;
+		$player_id=$node->field_id_player["und"][0]["value"];
+		$ligue[0]="fran";
+		$ligue[1]="fran2";
+		$id_ligue=0;
+
+		while(true){
+			$saison--;
+			$json=json_decode(get_json("http://api.stats.com/v1/stats/soccer/".$ligue[$id_ligue]."/stats/players/".$player_id."?season=".$saison."&",$ligue[$id_ligue]));
+			if(isset($json->message) && $json->message=="Data not found") {
+				$id_ligue++;
+				if($id_ligue>=count($ligue)) break;
+			} else {
+
+				$rs=current(current(current(current(current($json->apiResults)->league->players)->seasons)->eventType)->splits);
+				$carriere[$saison]=array(
+					"buts"=>$rs->playerStats->goals->total,
+					"passes"=>$rs->playerStats->assists->total,
+					"apparitions"=>$rs->playerStats->gamesPlayed,
+					"minutes_jouees"=>$rs->playerStats->minutesPlayed,
+					"team"=>$rs->team->displayName,
+					"ligue" => current($json->apiResults)->league->displayName,
+				);
+
+				$total["matchs"]+=$total["matchs"]+$rs->playerStats->gamesPlayed;
+				$total["buts"]+=$total["buts"]+$rs->playerStats->goals->total;
+
+				sleep(1);
+			}
+
+		}
+		$carriere["total"]=$total;	
+		$data["carriere"]=$carriere;
+		if($node->field_carriere["und"][0]["value"])
+			data_save("update","carriere",theme("sco_statistiques_historique",$data),$node->nid);
+		else 
+			data_save("insert","carriere",theme("sco_statistiques_historique",$data),$node->nid);
+}
+
+
+function sco_statistiques_node_load($node, $type) {
+	if($type[0]=="joueur") {
+		$nid=current(array_keys($node));
+		if(date("m")>=8 && date("m")<=12) $saison=date("Y");
+		else $saison=date("Y")-1;
+		$player_id=$node[$nid]->field_id_player["und"][0]["value"];
+		$json=json_decode(get_json("http://api.stats.com/v1/stats/soccer/fran/stats/players/".$node[$nid]->field_id_player["und"][0]["value"]."?season=".$saison."&","fran"));
+		$rs=current(current(current(current(current($json->apiResults)->league->players)->seasons)->eventType)->splits)->playerStats;
+		$statistiques_saison=array(
+			"buts"=>$rs->goals->total,
+			"passes"=>$rs->assists->total,
+			"apparitions"=>$rs->gamesPlayed,
+			"minutes_jouees"=>$rs->minutesPlayed
+		);
+
+
+	 	//$node[$nid]->carriere=$carriere;	
+
+		$node[$nid]->statistiques_saison=$statistiques_saison;
+
+
+	}
+}
+
+
+function sco_statistiques_theme() {
+	return array(
+		"sco_statistiques_custompage_template" => array(
+			'template' => 'custompage',
+			'arguments' => array(),
+		),
+		"sco_statistiques_historique" => array(
+			'template' => 'historique',
+			'arguments' => array(),
+		),
+		"sco_statistiques_fiche_match" => array(
+			'template' => 'fiche_match',
+			'arguments' => array(),
+		),
+		"sco_statistiques_resultat_journee" => array(
+			'template' => 'resultat_journee',
+			'arguments' => array(),
+		),
+	);
+}
