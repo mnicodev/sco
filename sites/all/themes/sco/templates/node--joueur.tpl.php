@@ -160,7 +160,7 @@ global $language;
 	</div>
 
 
-	<?php print render($content["field_carriere"]); ?>
+	<?php if($content["field_carriere"]) print render($content["field_carriere"]);else print $carriere; ?>
 
 
 

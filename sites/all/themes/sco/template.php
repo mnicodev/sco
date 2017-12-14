@@ -227,6 +227,57 @@ function sco_preprocess_node(&$variables) {
   if ($variables['view_mode'] == 'full' && node_is_page($variables['node'])) {
     $variables['classes_array'][] = 'node-full';
   }
+  
+  if($variables['node']->type=="joueur") {
+	  	$carriere=null;
+	
+		$total=array(
+			"matchs"=>0,
+			"buts"=>0
+		);
+		if(date("m")>=8 && date("m")<=12) $saison=date("Y");
+		else $saison=date("Y")-1;
+		
+		if(isset($variables['node']->field_id_player["und"][0]["value"]))$player_id=$variables['node']->field_id_player["und"][0]["value"];
+		else $player_id=search_id_player($variables['node']->title);
+		//echo $player_id;exit;
+		$ligue[0]="fran";
+		$ligue[1]="fran2";
+		$id_ligue=0;
+	
+		while(true){
+			$saison--;
+			$json=json_decode(get_json("http://api.stats.com/v1/stats/soccer/".$ligue[$id_ligue]."/stats/players/".$player_id."?season=".$saison."&",$ligue[$id_ligue]));
+			if(isset($json->message) && $json->message=="Data not found") {
+				$id_ligue++;
+				if($id_ligue>=count($ligue)) break;
+			} else {
+	
+				$rs=current(current(current(current(current($json->apiResults)->league->players)->seasons)->eventType)->splits);
+				$carriere[$saison]=array(
+					"buts"=>$rs->playerStats->goals->total,
+					"passes"=>$rs->playerStats->assists->total,
+					"apparitions"=>$rs->playerStats->gamesPlayed,
+					"minutes_jouees"=>$rs->playerStats->minutesPlayed,
+					"team"=>$rs->team->displayName,
+					"ligue" => current($json->apiResults)->league->displayName,
+				);
+	
+				$total["matchs"]+=$total["matchs"]+$rs->playerStats->gamesPlayed;
+				$total["buts"]+=$total["buts"]+$rs->playerStats->goals->total;
+	
+				//sleep(1);
+			}
+	
+		}
+		$carriere["total"]=$total;	
+		$data["carriere"]=$carriere;
+		
+		
+	
+	 	$variables["carriere"]=theme("sco_statistiques_historique",$data);
+	 	//print_r($variables["carriere"]);exit;
+ 	}
 }
 
 function sco_preprocess_taxonomy_term(&$variables) {

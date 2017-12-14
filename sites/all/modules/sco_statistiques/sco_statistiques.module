@@ -307,9 +307,9 @@ function sco_statistiques_init() {
 
 
 function search_id_player($name) {
-	global $api_key, $secret_key;
-	$url="http://api.stats.com/v1/stats/soccer/fran/participants/teams/".theme_get_setting("id_team","sco")."?api_key=".$api_key;
-	$sig=hash("sha256",$api_key.$secret_key.time());
+	global $api_key, $secret_key,$keys;
+	$url="http://api.stats.com/v1/stats/soccer/fran/participants/teams/".theme_get_setting("id_team","sco")."?api_key=".$keys["fran"]["api_key"];
+	$sig=hash("sha256",$keys["fran"]["api_key"].$keys["fran"]["secret_key"].time());
 	$url=$url."&sig=".$sig;
 	$c =curl_init();
 	curl_setopt($c,CURLOPT_URL,$url);
@@ -430,9 +430,11 @@ function data_save($action,$data,$value,$id) {
 function sco_statistiques_node_update($node) {
 	global $api_key, $secret_key;
 	if($node->type!="joueur") return;
-	//$id_player=search_id_player($node->title);
+	
+	//echo $id_player;exit;
 	//echo $node->field_id_player["und"][0]["value"];exit;
 	if(!isset($node->field_id_player["und"][0]["value"])) {
+		$id_player=search_id_player($node->title);
 	//node_save($node);
 		db_insert('field_data_field_id_player')
     	->fields(array(
@@ -460,9 +462,73 @@ function sco_statistiques_node_update($node) {
     	)
 		)
 		->execute();
-	}
+	} else $id_player=$node->field_id_player["und"][0]["value"];
 
 		$carriere=null;
+
+		$total=array(
+			"matchs"=>0,
+			"buts"=>0
+		);
+		if(date("m")>=8 && date("m")<=12) $saison=date("Y");
+		else $saison=date("Y")-1;
+		$player_id=$id_player;
+		$ligue[0]="fran";
+		$ligue[1]="fran2";
+		$id_ligue=0;
+
+		while(true){
+			$saison--;
+			$json=json_decode(get_json("http://api.stats.com/v1/stats/soccer/".$ligue[$id_ligue]."/stats/players/".$id_player."?season=".$saison."&",$ligue[$id_ligue]));
+			if(isset($json->message) && $json->message=="Data not found") {
+				$id_ligue++;
+				if($id_ligue>=count($ligue)) break;
+			} else {
+
+				$rs=current(current(current(current(current($json->apiResults)->league->players)->seasons)->eventType)->splits);
+				$carriere[$saison]=array(
+					"buts"=>$rs->playerStats->goals->total,
+					"passes"=>$rs->playerStats->assists->total,
+					"apparitions"=>$rs->playerStats->gamesPlayed,
+					"minutes_jouees"=>$rs->playerStats->minutesPlayed,
+					"team"=>$rs->team->displayName,
+					"ligue" => current($json->apiResults)->league->displayName,
+				);
+
+				$total["matchs"]+=$total["matchs"]+$rs->playerStats->gamesPlayed;
+				$total["buts"]+=$total["buts"]+$rs->playerStats->goals->total;
+
+				sleep(1);
+			}
+
+		}
+		$carriere["total"]=$total;	
+		$data["carriere"]=$carriere;
+		if($node->field_carriere["und"][0]["value"])
+			data_save("update","carriere",theme("sco_statistiques_historique",$data),$node->nid);
+		else 
+			data_save("insert","carriere",theme("sco_statistiques_historique",$data),$node->nid);
+}
+
+
+function sco_statistiques_node_load($node, $type) {
+	drupal_add_css(drupal_get_path("module","sco_statistiques")."/styles.css",array('group' => CSS_DEFAULT));
+	if($type[0]=="joueur") {
+		$nid=current(array_keys($node));
+		if(date("m")>=8 && date("m")<=12) $saison=date("Y");
+		else $saison=date("Y")-1;
+		if(isset($node[$nid]->field_id_player["und"])) $player_id=$node[$nid]->field_id_player["und"][0]["value"];
+		else $id_player=search_id_player($node[$nid]->title);
+		$json=json_decode(get_json("http://api.stats.com/v1/stats/soccer/fran/stats/players/".$id_player."?season=".$saison."&","fran"));
+		$rs=current(current(current(current(current($json->apiResults)->league->players)->seasons)->eventType)->splits)->playerStats;
+		$statistiques_saison=array(
+			"buts"=>$rs->goals->total,
+			"passes"=>$rs->assists->total,
+			"apparitions"=>$rs->gamesPlayed,
+			"minutes_jouees"=>$rs->minutesPlayed
+		);
+
+		/*$carriere=null;
 
 		$total=array(
 			"matchs"=>0,
@@ -502,30 +568,10 @@ function sco_statistiques_node_update($node) {
 		}
 		$carriere["total"]=$total;	
 		$data["carriere"]=$carriere;
-		if($node->field_carriere["und"][0]["value"])
-			data_save("update","carriere",theme("sco_statistiques_historique",$data),$node->nid);
-		else 
-			data_save("insert","carriere",theme("sco_statistiques_historique",$data),$node->nid);
-}
+		
+		
 
-
-function sco_statistiques_node_load($node, $type) {
-	if($type[0]=="joueur") {
-		$nid=current(array_keys($node));
-		if(date("m")>=8 && date("m")<=12) $saison=date("Y");
-		else $saison=date("Y")-1;
-		$player_id=$node[$nid]->field_id_player["und"][0]["value"];
-		$json=json_decode(get_json("http://api.stats.com/v1/stats/soccer/fran/stats/players/".$node[$nid]->field_id_player["und"][0]["value"]."?season=".$saison."&","fran"));
-		$rs=current(current(current(current(current($json->apiResults)->league->players)->seasons)->eventType)->splits)->playerStats;
-		$statistiques_saison=array(
-			"buts"=>$rs->goals->total,
-			"passes"=>$rs->assists->total,
-			"apparitions"=>$rs->gamesPlayed,
-			"minutes_jouees"=>$rs->minutesPlayed
-		);
-
-
-	 	//$node[$nid]->carriere=$carriere;	
+	 	$node[$nid]->carriere=theme("sco_statistiques_historique",$data);	*/
 
 		$node[$nid]->statistiques_saison=$statistiques_saison;
 
